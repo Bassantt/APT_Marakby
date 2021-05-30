@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container">
+  <div class="navbar-container justify-content-center">
     
      <div class="navbar-list">
         <ul>
@@ -27,7 +27,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .navbar-container {
-  background-color: rgb(37, 91, 122);
+  width: 100%;
   margin: 0%;
   height: 80px;
   z-index: 2000;
@@ -65,7 +65,6 @@ a {
       font-weight: 700;
       line-height: 1.5;
       position: fixed;
-      right: 7%;
       margin: 0;
     }
 </style>
