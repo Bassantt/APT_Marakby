@@ -3,8 +3,8 @@
     
      <div class="navbar-list">
         <ul>
-          <router-link to="/" v-if="isLoggedIn != 'success'" tag="li">
-            <a> Sign up</a>
+          <router-link to="/Signup" tag="li">
+            <a> Signup</a>
           </router-link>
           <li id="separator">|</li>
           <router-link to="/Login" v-if="isLoggedIn != 'success'" tag="li">
