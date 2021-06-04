@@ -1,10 +1,19 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from "@nestjs/common";
+import { TypegooseModule } from "nestjs-typegoose";
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
-})
-export class AppModule {}
+  imports: [
+    TypegooseModule.forRoot(process.env.CONNECTION_STRING, {
+      useNewUrlParser: true,
+    }),
+    AuthModule,
+    UserModule,
+    SharedModule,
+  ],
+  controllers: [],
+  providers: [],
+
+}) export class AppModule { }

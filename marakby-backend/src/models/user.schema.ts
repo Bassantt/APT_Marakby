@@ -1,13 +1,13 @@
 import { prop, Ref } from '@typegoose/typegoose';
 import { Ship } from './ship.schema';
-import { IsString, IsEmail, IsOptional, Length, IsNumber, } from 'class-validator';
+import { IsString, IsEmail, IsOptional, Length, IsNumber, Min, Max } from 'class-validator';
 
 export class User {
   @prop({ required: true })
   @Length(2, 30)
   @IsString()
   userName: string;
-  @Length(4, 12)
+  @Length(4, 20)
   @IsString()
   @prop({ required: true })
   password: string;
@@ -18,7 +18,8 @@ export class User {
   @prop({ ref: Ship })
   ownShips?: [Ref<Ship>];
   @prop({ required: true })
-  @Length(1, 3) // 1 as customer, 2 as manager ,3 as admin
+  @Min(1)
+  @Max(3)
   @IsNumber()
   type: number;
   @prop({ required: true })
@@ -29,13 +30,18 @@ export class User {
   @IsOptional()
   @Length(7, 30)
   @IsString()
-  creditCard: string;
-  @prop({ required: true })
+  creditCard?: string;
+  @prop({ options: true })
   @Length(0, 10) // 1 as customer, 2 as manager ,3 as admin
   @IsNumber()
-  rate: number;
+  @prop({ default: 0 })
+  rate?: number;
   @prop({ ref: User })
   interstedManagers?: [Ref<User>];
   @prop({ ref: Ship })
   interstedShips?: [Ref<Ship>];
+  @prop({ required: true })
+  @Length(3, 30)
+  @IsString()
+  country: string;
 }

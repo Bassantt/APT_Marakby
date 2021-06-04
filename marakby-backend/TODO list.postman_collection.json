@@ -1,0 +1,516 @@
+{
+	"info": {
+		"_postman_id": "328aea78-408c-40a9-b0c2-a7d282e0a83f",
+		"name": "TODO list",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"item": [
+				{
+					"name": "sign up ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"Aya\",\r\n    \"password\": \"1234\",\r\n    \"email\": \"ayasabohadima@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/sign-up",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"sign-up"
+							]
+						},
+						"description": "body param :\r\nuserName is string\r\npassword is string \r\nemail is email format \r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"1234\",\r\n    \"email\": \"ayasabohadima@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						},
+						"description": "body param :\r\nemail is email of user  ,\r\npassword is required"
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJkZjU3OTNhMjU3YTM5NmM3NGUwZDEiLCJpYXQiOjE1OTY4NDkyNDksImV4cCI6MjQyOTAwNDUzMDc0Njg0NDUwfQ.ybqbbtTSaaqt5eQJ6aDmNkYYjJBopwEvZ6tdtXHJX2U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/me/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"me",
+								"delete"
+							]
+						},
+						"description": "bearer jwt token "
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user API",
+			"item": [
+				{
+					"name": "get all users to test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						},
+						"description": "no need any param"
+					},
+					"response": []
+				},
+				{
+					"name": "get me ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJlMDFlMTgyZDQ2ZjM1NGNiOGQ0ZDciLCJpYXQiOjE1OTY4NTA2NjcsImV4cCI6MjQyOTAwNDUzMDc0Njg1ODYwfQ.YeOOmQTmAYOOabKxnW3mxAwZafDvkvV2RU1vj71AbJ8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"me"
+							]
+						},
+						"description": "get my profile "
+					},
+					"response": []
+				}
+			],
+			"description": "user routes ",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "item API",
+			"item": [
+				{
+					"name": "create item ",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"description": " token abearer token to know which user is you",
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJlZDJlNTA0NDY4NzNiNWNiN2FlOWEiLCJpYXQiOjE1OTY5MDQxNzAsImV4cCI6MjQyOTAwNDUzMDc0NzM5MzYwfQ.xrotQhuXJfJJsK00xpgvcOqT-4QIIykT1ppGnDPMS4Y"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"do my homework\",\r\n    \"description\":\"for math\",\r\n    \"endTime\":2.5,\r\n    \"toDoDate\":\"2020-09-20\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/item/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"item",
+								"create"
+							]
+						},
+						"description": "to create new item in your TODO list <br>\r\nBody param <br>\r\n \"endTime\" :  you should enter the hour in flout number ,<br>\r\n \"name\" \" the main name of this task ,<br>\r\n \"description\" : optional string of any addtion need to this item , <br>\r\n \"toDoDate\": optional date you should end in it date formate is \"yyyy-mm-dd\" ,<br>\r\n \"ifDone\"  : \"optional\" if you do this task make true <br>"
+					},
+					"response": []
+				},
+				{
+					"name": "toggle is done ",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJlZDJlNTA0NDY4NzNiNWNiN2FlOWEiLCJpYXQiOjE1OTY5MDQxNzAsImV4cCI6MjQyOTAwNDUzMDc0NzM5MzYwfQ.xrotQhuXJfJJsK00xpgvcOqT-4QIIykT1ppGnDPMS4Y",
+								"description": " token abearer token to know which user is you",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/me/item/5f2eda6eb3ace71b38b7a7ea/toggle-done",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"me",
+								"item",
+								"5f2eda6eb3ace71b38b7a7ea",
+								"toggle-done"
+							]
+						},
+						"description": "if you need to make this item is done (when it not done ) \r\nsend this request <br>\r\nand when you need this item not done when it done send this request <br>\r\nneed item_id as a path param <br>\r\nwhich refer to the id of item need toggle\r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "get item ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJlZDJlNTA0NDY4NzNiNWNiN2FlOWEiLCJpYXQiOjE1OTY5MDQxNzAsImV4cCI6MjQyOTAwNDUzMDc0NzM5MzYwfQ.xrotQhuXJfJJsK00xpgvcOqT-4QIIykT1ppGnDPMS4Y",
+								"description": " token abearer token to know which user is you",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/item/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"item",
+								""
+							]
+						},
+						"description": "to get item you need <br>\r\nshould send as path param <br>\r\n\"item_id\" : the id of this item<br>\r\nand send in hidder \"Autharization\"  as token \r\n"
+					},
+					"response": []
+				},
+				{
+					"name": "delete an item",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"description": " token abearer token to know which user is you",
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJmMTVjZGEwZWM3NDJmZWMwMzUyMGQiLCJpYXQiOjE1OTY5MjEyOTQsImV4cCI6MjQyOTAwNDUzMDc0NzU2NDgwfQ.pxHfD8wWwQ6asbs-4LeSkqBYwr0YS7CFKefT9BJqCpU"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/item/5f2f1617a0ec742fec035210",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"item",
+								"5f2f1617a0ec742fec035210"
+							]
+						},
+						"description": "to delete item you need <br>\r\nshould send as path param <br>\r\n\"item_id\" : the id of this item<br>\r\nand send in hidder \"Autharization\"  as token"
+					},
+					"response": [
+						{
+							"name": "correct ",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"description": " token abearer token to know which user is you",
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJmMTVjZGEwZWM3NDJmZWMwMzUyMGQiLCJpYXQiOjE1OTY5MjEyOTQsImV4cCI6MjQyOTAwNDUzMDc0NzU2NDgwfQ.pxHfD8wWwQ6asbs-4LeSkqBYwr0YS7CFKefT9BJqCpU"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/item/5f2f1617a0ec742fec035210",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"item",
+										"5f2f1617a0ec742fec035210"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Aug 2020 21:17:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "get all my items ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJlZDJlNTA0NDY4NzNiNWNiN2FlOWEiLCJpYXQiOjE1OTY5MDQxNzAsImV4cCI6MjQyOTAwNDUzMDc0NzM5MzYwfQ.xrotQhuXJfJJsK00xpgvcOqT-4QIIykT1ppGnDPMS4Y",
+								"description": " token abearer token to know which user is you",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/me/items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"me",
+								"items"
+							]
+						},
+						"description": "to gell all TODO list in all days <br>\r\nall items you save in the app"
+					},
+					"response": []
+				},
+				{
+					"name": "get all my items  for today",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": " token abearer token to know which user is you",
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJlZDJlNTA0NDY4NzNiNWNiN2FlOWEiLCJpYXQiOjE1OTY5MDQxNzAsImV4cCI6MjQyOTAwNDUzMDc0NzM5MzYwfQ.xrotQhuXJfJJsK00xpgvcOqT-4QIIykT1ppGnDPMS4Y"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/me/items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"me",
+								"items"
+							]
+						},
+						"description": "to gell all TODO list in for today <br>"
+					},
+					"response": []
+				},
+				{
+					"name": "get undo my items  for today",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"description": " token abearer token to know which user is you",
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJlZDJlNTA0NDY4NzNiNWNiN2FlOWEiLCJpYXQiOjE1OTY5MDQxNzAsImV4cCI6MjQyOTAwNDUzMDc0NzM5MzYwfQ.xrotQhuXJfJJsK00xpgvcOqT-4QIIykT1ppGnDPMS4Y"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/me/items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"me",
+								"items"
+							]
+						},
+						"description": "to get undo TODO list in for today <br>"
+					},
+					"response": []
+				},
+				{
+					"name": "update item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJlZDJlNTA0NDY4NzNiNWNiN2FlOWEiLCJpYXQiOjE1OTY5MDQxNzAsImV4cCI6MjQyOTAwNDUzMDc0NzM5MzYwfQ.xrotQhuXJfJJsK00xpgvcOqT-4QIIykT1ppGnDPMS4Y",
+								"description": " token abearer token to know which user is you",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"my new name for item \"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/item/5f2ed9475501c01ffcd28e04/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"item",
+								"5f2ed9475501c01ffcd28e04",
+								"update"
+							]
+						},
+						"description": "to update item data :<br>\r\nsena as Body param :<br>\r\n \"endTime\": (optional) if yo need to update hour should end in it as number<br>\r\n \"name\" :(optional) if you need to update main name of task<br> \r\n \"description\":(optional) if you need update additonal info <br>\r\n \"toDoDate\"(optional) if you need update the date should end in it in date formate"
+					},
+					"response": []
+				},
+				{
+					"name": "get undo items in TODO list  ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJmMTVjZGEwZWM3NDJmZWMwMzUyMGQiLCJpYXQiOjE1OTY5MjEyOTQsImV4cCI6MjQyOTAwNDUzMDc0NzU2NDgwfQ.pxHfD8wWwQ6asbs-4LeSkqBYwr0YS7CFKefT9BJqCpU",
+								"description": " token abearer token to know which user is you",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/me/undo-items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"me",
+								"undo-items"
+							]
+						},
+						"description": "to get items you do not do in TODO list  "
+					},
+					"response": []
+				},
+				{
+					"name": "get done items in TODO list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjJmMTVjZGEwZWM3NDJmZWMwMzUyMGQiLCJpYXQiOjE1OTY5MjEyOTQsImV4cCI6MjQyOTAwNDUzMDc0NzU2NDgwfQ.pxHfD8wWwQ6asbs-4LeSkqBYwr0YS7CFKefT9BJqCpU",
+								"description": " token abearer token to know which user is you",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/me/done-items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"me",
+								"done-items"
+							]
+						},
+						"description": "to get items you have done in TODO list"
+					},
+					"response": []
+				}
+			],
+			"description": "this request <br>\r\nto add an item , edit , delete or make it is done <br>\r\nand you can get your all to do list , what done ,  not done , what should be done today or all list today done and not done  \r\n",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
