@@ -10,7 +10,7 @@ export default {
     resendtoken: localStorage.getItem("X-token") || "",
     User: {},
     isEdited: "",
-    deleted_Acount: true
+    deleted_Acount: true,
   },
   mutations: {
     auth_request(state) {
@@ -36,7 +36,7 @@ export default {
       state.status = "";
       state.token = "";
       state.User = {};
-    }
+    },
   },
   actions: {
     signUp({ commit }, user) {
@@ -48,16 +48,16 @@ export default {
           username: user.username,
           gender: user.gender,
           country: user.country,
-          birthday: user.birthday
+          birthday: user.birthday,
         })
-        .then(response => {
+        .then((response) => {
           ///////////////////
           const token = response.data.token;
           localStorage.setItem("X-token", token);
           console.log("token", token);
           ///////////////
         })
-        .catch(error => {
+        .catch((error) => {
           commit("auth_error", "signup_err");
           localStorage.removeItem("X-token");
           console.log(error);
@@ -69,7 +69,7 @@ export default {
       commit("auth_request");
       axios
         .get("/api/me-player")
-        .then(response => {
+        .then((response) => {
           const user = response.data[0];
           if (!localStorage.getItem("set-volume")) {
             const setVol = user.player.volume / 10;
@@ -85,7 +85,7 @@ export default {
           localStorage.setItem("is-artist", user.userType);
           if (flag) router.replace("/");
         })
-        .catch(error => {
+        .catch((error) => {
           commit("auth_error", "user_err");
           localStorage.removeItem("x-auth-token");
           console.log(error);
@@ -96,15 +96,15 @@ export default {
       axios
         .post("/api/login", {
           email: user.email,
-          password: user.password
+          password: user.password,
         })
-        .then(response => {
+        .then((response) => {
           const token = response.data.token;
           localStorage.setItem("x-auth-token", token);
           axios.defaults.headers.common["x-auth-token"] = token;
           store.dispatch("Authorization/get_user", true);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
           commit("auth_error", "login_err");
           localStorage.removeItem("x-auth-token");
@@ -112,25 +112,23 @@ export default {
     },
     logout({ commit }) {
       commit("logout");
-      axios
-        .post("/api/user/logout", {})
-        .then(() => {
-          localStorage.removeItem("x-auth-token");
-          localStorage.removeItem("set-volume");
-          localStorage.removeItem("is-artist");
-          delete axios.defaults.headers.common["x-auth-token"];
-        });
+      axios.post("/api/user/logout", {}).then(() => {
+        localStorage.removeItem("x-auth-token");
+        localStorage.removeItem("set-volume");
+        localStorage.removeItem("is-artist");
+        delete axios.defaults.headers.common["x-auth-token"];
+      });
     },
     saveEdit({ commit }, user) {
       axios
         .put("/api/me/update", {
-          user
+          user,
         })
         .then(() => {
           commit("is_edit", "success");
           router.replace("/EmailConfirmation");
         })
-        .catch(error => {
+        .catch((error) => {
           if (
             error.response.data.error.details[0].message ==
             '"cardNumber" must be a credit card'
@@ -144,7 +142,7 @@ export default {
             commit("is_edit", "dateerror");
           else commit("is_edit", "faild");
         });
-    },  
+    },
     removeuser({ commit, state }) {
       axios
         .delete("api/remove")
@@ -154,20 +152,20 @@ export default {
           router.replace("/signup");
           delete axios.defaults.headers.common["x-auth-token"];
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error.response.status);
           if (error.response.status == 400) {
             state.deleted_Acount = false;
           }
         });
-    }
+    },
   },
   getters: {
-    Username: state => state.User.displayName,
-    GetStatus: state => state.status,
-    user: state => state.User,
-    isEdited: state => state.isEdited,
-    userid: state => state.User._id,
-    deleted_Acountt: state => state.deleted_Acount
-  }
+    Username: (state) => state.User.displayName,
+    GetStatus: (state) => state.status,
+    user: (state) => state.User,
+    isEdited: (state) => state.isEdited,
+    userid: (state) => state.User._id,
+    deleted_Acountt: (state) => state.deleted_Acount,
+  },
 };
