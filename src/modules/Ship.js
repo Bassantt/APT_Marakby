@@ -5,6 +5,7 @@ export default {
     Ships: [],
     Ship_Id: "",
     ShipsData: [],
+    ShipsOutFromSearch: [],
   },
   mutations: {
     setShips(state, resShips) {
@@ -15,6 +16,9 @@ export default {
     },
     setShipsData(state, data) {
       state.ShipsData = data;
+    },
+    setShipsOutFromSearch(state, data) {
+      state.ShipsOutFromSearch = data;
     },
   },
   actions: {
@@ -46,9 +50,22 @@ export default {
           console.log(error);
         });
     },
+    //////////////////search for ship with name////////////////////////
+    SearchShip({ commit }, searchvalue) {
+      axios
+        .get("/api/search/Ships/" + searchvalue)
+        .then((respons) => {
+          let resultShips = respons.data.Ships;
+          commit("setShipsOutFromSearch", resultShips);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   getters: {
     getShips: (state) => state.Ships,
     getShipsData: (state) => state.ShipsData,
+    setShipsOutFromSearch: (state) => state.ShipsOutFromSearch,
   },
 };

@@ -22,7 +22,7 @@
       <ShipCard
         class="col-lg-10% col-md-60% col-xs-6"
         :key="'1'"
-        :Shipname="'SEE_SHIP'"
+        :Shipname="'Marakby'"
         :ShipId="'1'"
       />
     </div>
@@ -31,20 +31,20 @@
 
 <script>
 import ShipCard from "@/components/ShipCard.vue";
-//import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BrowsAll",
   components: {
     ShipCard,
   },
-  // mounted() {
-  //  this.$store.dispatch("Ship/showfreqShips");
-  // },
+  created: function () {
+    this.$store.dispatch("Ship/showfreqShips");
+  },
   computed: {
-    //  ...mapGetters({
-    //     Ships: "Ship/getShips"
-    //  })
+    ...mapGetters({
+      Ships: "Ship/getShips",
+    }),
   },
 };
 </script>

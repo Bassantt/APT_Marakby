@@ -1,5 +1,12 @@
 <template>
-  <div class="background">
+  <div class="background px-0 m-0">
+    <div class="navbar-list">
+      <ul style="list-style-type: none">
+        <router-link to="/" v-if="isLoggedIn != 'success'" tag="li">
+          <a>Back TO Home</a>
+        </router-link>
+      </ul>
+    </div>
     <div class="justify-content-center cont">
       <!-- login form -->
       <form>
@@ -30,6 +37,11 @@
 </template>
 
 <style scoped>
+.background {
+  background-color: rgba(158, 185, 185, 0.596);
+  margin: 0px 0px;
+  height: 1000px;
+}
 .cont {
   padding: 100px 200px;
   background-color: rgb(37, 91, 122);
@@ -93,6 +105,27 @@ input {
   color: #fff;
   background-color: rgb(96, 155, 189);
   border: solid #616467 2px;
+}
+.navbar-list {
+  background-color: rgb(37, 91, 122);
+  width: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+  padding: 13px;
+}
+a {
+  color: #ffffff;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 0%;
+  display: block;
+  margin-top: 15px;
+}
+a:hover {
+  color: #0f0f0f;
 }
 </style>
 
