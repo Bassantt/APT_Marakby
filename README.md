@@ -1,6 +1,7 @@
 # APT_Marakby
 ## to install the packages 
 > first delete package-lock.json
+ ## then 
 >   npm install
 ## to run client 
 > npm run serve
