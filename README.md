@@ -1,10 +1,10 @@
 # APT_Marakby
-to install the packages
+>> to install the packages
 -------------------
-first delete package-lock.json
+>> first delete package-lock.json
 -------------------
-->   npm install
+>>   npm install
 -------------------
-->  npm run serve
+>>  npm run serve
 # API Documentation Link is 
->> https://www.getpostman.com/collections/f681215a8c700c339123
+>> https://documenter.getpostman.com/view/10486077/TzY4gvXF
