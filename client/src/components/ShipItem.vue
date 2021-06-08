@@ -19,23 +19,23 @@
 <script>
 export default {
   name: "ShipItem",
- props: {
+  props: {
     Ship_Id: {
       type: String,
     },
     Ship_Name: {
       type: String,
     },
-     Ship_Price: {
+    Ship_Price: {
       type: String,
     },
-
   },
   methods: {
     DeleteShip() {
       console.log("I will delete");
 
       //will put dispatch here and send the ship id
+      this.$store.dispatch("Ship/deletemanagerShip", this.Ship_Id);
     },
   },
 };
