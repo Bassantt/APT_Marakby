@@ -7,7 +7,9 @@ import { TypegooseModule } from "nestjs-typegoose";
 import { Ship } from "../models/ship.schema";
 import { User } from "../models/user.schema";
 import { Bookings } from "../models/booking.schema";
-import { SharedModule } from '../shared/shared.module'
+import { SharedModule } from '../shared/shared.module';
+import { UserRepository } from '../user/user-repository.service';
+
 @Module({
   imports: [SharedModule, SharedModule,
     TypegooseModule.forFeature([Ship]),
@@ -16,7 +18,8 @@ import { SharedModule } from '../shared/shared.module'
   providers: [
     ShipService,
     UserService,
-    ShipRepository
+    ShipRepository,
+    UserRepository
   ],
   controllers: [ShipController]
 })

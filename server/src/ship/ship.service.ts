@@ -49,4 +49,13 @@ export class ShipService {
         await this.ShipRepository.delete(shipID);
     }
 
+    async getShipsByID(ships) {
+        const shipsData = [];
+        for (let i = 0; i < ships.length; i++) {
+            const ship = await this.getShipByID(ships[i]);
+            shipsData.push(ship);
+        }
+        return shipsData;
+    }
+
 }

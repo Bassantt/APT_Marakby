@@ -9,8 +9,6 @@ export class ShipDto {
   @IsOptional()
   description?: string;
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
   blockDates?: [Date];
   @IsOptional()
   @IsNumber()
@@ -25,10 +23,8 @@ export class ShipDto {
   @IsNumber()
   capcity?: Number;
   @IsOptional()
-  @IsString()
   availableFunctions?: [{ salary: Number, discription: string }];
   @IsOptional()
-  @IsNumber()
   numberOfHoursPerday?: Number;
   @IsOptional()
   offers?: [{ description: string, salary: Number }];

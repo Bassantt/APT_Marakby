@@ -16,7 +16,7 @@ export class ShipController {
     @Get('/me/ships')
     async myShips(@Request() req) {
         const ships = await this.userService.getUserShips(req.user._id);
-        const ships_data = await this.shipService.getShipByID(ships); // get ships by arry of ids
+        const ships_data = await this.shipService.getShipsByID(ships); // get ships by arry of ids
         return { ships_data };
     }
 
