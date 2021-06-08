@@ -13,7 +13,7 @@ export class Ship {
   description?: string;
   @IsOptional()
   @prop({ options: true })
-  blockDates?: [Date];
+  blockDates?: {};
   @IsOptional()
   @prop({ options: true })
   salaryPerHour?: Number;

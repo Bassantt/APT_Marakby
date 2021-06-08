@@ -10,7 +10,7 @@ export class ShipDto {
   @IsOptional()
   description?: string;
   @IsOptional()
-  blockDates?: [Date];
+  blockDates?: {};
   @IsOptional()
   @IsNumber()
   salaryPerHour?: Number;

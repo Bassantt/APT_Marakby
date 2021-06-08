@@ -6,10 +6,8 @@ import { IsString, IsOptional, IsDate, Length, IsNumber } from 'class-validator'
 
 export class Bookings {
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
   @prop({ options: true })
-  bookDate?: Date;
+  bookDate?: string;
   @IsOptional()
   @prop({ options: true })
   @IsNumber()
