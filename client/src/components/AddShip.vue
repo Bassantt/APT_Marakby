@@ -5,31 +5,56 @@
     <div class="cont">
       <input
         type="text"
-        v-model="ship_name"
+        v-model="name"
         name="ship_name"
         placeholder="Add ship name..."
       />
       <br /><br />
       <input
         type="text"
-        v-model="ship_location"
-        name="ship_location"
-        placeholder="Add ship loc..."
+        v-model="description"
+        name="ship_name"
+        placeholder="Add ship description..."
       />
       <br /><br />
-      <label for="ship_price"> Price:</label>
+      <input
+        type="text"
+        v-model="location"
+        name="ship_location"
+        placeholder="Add ship location..."
+      />
+      <br /><br />
+      <label for="ship_price">salary Per Hour</label>
+      <br /><br />
       <input
         type="number"
-        v-model="ship_price"
+        v-model="salaryPerHour"
         name="ship_price"
         placeholder="Add ship price..."
       />
       <br /><br />
       <input
         type="text"
-        v-model="ship_description"
-        name="ship_description"
-        placeholder="Add ship desc..."
+        v-model="country"
+        name="ship_country"
+        placeholder="Add ship country..."
+      />
+      <br /><br />
+      <label for="ship_price">capcity</label>
+      <br /><br />
+      <input
+        type="number"
+        v-model="capcity"
+        name="ship_price"
+        placeholder="Add ship capcity..."
+      />
+      <br /><br />
+      <label for="ship_price">number Of Hours Per day</label>
+      <input
+        type="number"
+        v-model="numberOfHoursPerday"
+        name="ship_price"
+        placeholder="Add ship numberOfHoursPerday..."
       />
       <br /><br />
       <input type="submit" value="Submit" class="btn" @click="AddShip" />
@@ -44,25 +69,31 @@ export default {
   name: "AddShip",
   data() {
     return {
-      ship_name: "",
-      ship_location: "",
-      ship_ImageSrc: "./assets/ship2.jpg",
-      Available: true,
-      ship_price: 0,
-      ship_description: "",
-      Rate: 5.0,
+      name: "",
+      description: "",
+      blockDates: [],
+      salaryPerHour: 0,
+      location: "",
+      country: "",
+      capcity: 50,
+      availableFunctions: [],
+      numberOfHoursPerday: 0,
+      offers: [],
     };
   },
   methods: {
     AddShip() {
       const newShip = {
-        Name: this.ship_name,
-        Loc: this.ship_location,
-        ImageSrc: this.ship_ImageSrc,
-        Price: this.ship_price,
-        Description: this.ship_description,
-        Rate: 5.0,
-        Available: true,
+        name: this.name,
+        description: this.description,
+        blockDates: [],
+        salaryPerHour: this.salaryPerHour,
+        location: this.location,
+        country: this.country,
+        capcity: this.capcity,
+        availableFunctions: [],
+        numberOfHoursPerday: this.numberOfHoursPerday,
+        offers: [],
       };
       console.log(newShip);
 
@@ -81,7 +112,6 @@ export default {
   margin: 5% 20%;
   padding: 50px;
   background-color: rgb(37, 91, 122);
-  margin-bottom: 50px;
 }
 
 input[type="text"] {
@@ -108,5 +138,8 @@ h1 {
   background-color: rgb(96, 155, 189);
   border-radius: 50px;
   border: solid black;
+}
+label {
+  color: white;
 }
 </style>
