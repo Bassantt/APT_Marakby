@@ -8,7 +8,7 @@
           class="stretched-link"
           id="carglink"
           testid="cardlink"
-        ></router-link>
+        ></router-link>        
       </div>
     </div>
     <img
