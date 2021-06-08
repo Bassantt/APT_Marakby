@@ -10,6 +10,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { SharedModule } from '../shared/shared.module';
 import { Email } from './send-email.service';
 import { UserRepository } from '../user/user-repository.service';
+import { ShipRepository } from '../ship/ship-repository.service';
 @Module({
   imports: [SharedModule, SharedModule,
     TypegooseModule.forFeature([User]),
@@ -22,6 +23,7 @@ import { UserRepository } from '../user/user-repository.service';
     UserService,
     Email,
     UserRepository,
+    ShipRepository
   ],
   controllers: [AuthController]
 })

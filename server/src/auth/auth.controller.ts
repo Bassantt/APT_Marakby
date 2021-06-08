@@ -19,7 +19,8 @@ export class AuthController {
         if (!createdUser) throw new Error('user not found');
         this.email.sendEmail(createdUser.email, "", 'confirm', createdUser.userName);
         const token = await this.authService.signPayload({ _id: createdUser._id });
-        return { token };
+        user.password = null;
+        return { token, user };
     }
 
     @Post('/login')
@@ -27,7 +28,8 @@ export class AuthController {
         const user = await this.userService.findByLogin(loginDto);
         if (!user) throw new Error('user not found');
         const token = await this.authService.signPayload({ _id: user._id, });
-        return { token };
+        user.password = null;
+        return { token, user };
     }
 
     // should takeToken not body param

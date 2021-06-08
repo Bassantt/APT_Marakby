@@ -16,7 +16,7 @@ export class RegisterDto {
   type: number;
   @Length(8, 17)
   @IsString()
-  Phone: string;
+  Phone?: string;
   @Length(3, 30)
   @IsString()
   country: string;

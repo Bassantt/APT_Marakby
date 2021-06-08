@@ -23,8 +23,8 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T>  {
         return await this._Model.find(files).exec();
     }
 
-    async create(createUserDto: T) {
-        const createdUser = new this._Model(createUserDto);
+    async create(CreateObject: T) {
+        const createdUser = new this._Model(CreateObject);
         await createdUser.save();
         return createdUser;
     }
@@ -37,6 +37,12 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T>  {
 
     async delete(id) {
         if (await this._Model.findOneAndDelete({ _id: id }))
+            return true;
+        return false;
+    }
+
+    async deleteMany(selector: {}) {
+        if (await this._Model.deleteMany(selector))
             return true;
         return false;
     }
