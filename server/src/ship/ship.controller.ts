@@ -71,11 +71,15 @@ export class ShipController {
     }
 
     @Get('/search/ships/')
-    async getShipsBySearch(@Query('search_by') searchByCountry: boolean, @Query('name') name: string) {
-        if (searchByCountry == true)
+    async getShipsBySearch(@Query('searchByCountry') searchByCountry, @Query('name') name: string) {
+
+        if (searchByCountry == true || searchByCountry == "true") {
+            console.log(searchByCountry);
             return await this.shipService.searchForShipByCountry(name);
-        else
+        }
+        else {
             return await this.shipService.searchForShipByname(name);
+        }
     }
 
 }
