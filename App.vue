@@ -1,31 +1,27 @@
 
 <template>
   <div id="app">
-  
 
-    <img alt="Vue logo" src="./assets/logo.png">
-    <h1>{{msg}}</h1>
-    <Ships v-bind:ships="ships" v-on:del-ship="deleteship"/>
-    <br>
-    <h3>To Add a new ship:</h3>
-    <AddShip v-on:add-ship="addShip"/>
-    <br>
     
+    <br>
+    <ReservationCard v-bind:ships="ships" />
 
   </div>
 </template>
 
 <script>
-import Ships from './components/Ships.vue';
-import AddShip from './components/AddShip.vue';
-
+//import Ships from './components/Ships.vue';
+//import AddShip from './components/AddShip.vue';
+import ReservationCard from './components/ReservationCard.vue';
 
 
 export default {
   name: 'App',
   components: {
-    Ships,
-    AddShip    
+  //  Ships,
+ //   AddShip,
+    ReservationCard
+    
   },
   data(){
     return{
@@ -40,7 +36,8 @@ export default {
         Price:1500,
         Description:"This is a very good ship",
         Rate:5.0,
-        Available:true
+        Available:true,
+        Features:[true,1,true]
       },
       
       {
@@ -51,7 +48,8 @@ export default {
         Price:500,
         Description:"This is a very bad ship",
         Rate:5.0,
-        Available:true
+        Available:true,
+        Features:[true,true,false]
 
       }
 
