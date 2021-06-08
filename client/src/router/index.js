@@ -29,7 +29,7 @@ const routes = [
     component: Admin,
   },
   {
-    path: "/SearchResult/:Searchvalue",
+    path: "/SearchResult/:Searchvalue/:searchwith",
     name: "SearchResult",
     component: SearchResult,
   },

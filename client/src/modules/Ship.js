@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "../store";
 export default {
   namespaced: true,
   state: {
@@ -6,6 +7,7 @@ export default {
     Ship_Id: "",
     ShipsData: [],
     ShipsOutFromSearch: [],
+    managerShips: [],
   },
   mutations: {
     setShips(state, resShips) {
@@ -19,6 +21,9 @@ export default {
     },
     setShipsOutFromSearch(state, data) {
       state.ShipsOutFromSearch = data;
+    },
+    setmanagerShips(state, data) {
+      state.managerShips = data;
     },
   },
   actions: {
@@ -51,12 +56,61 @@ export default {
         });
     },
     //////////////////search for ship with name////////////////////////
-    SearchShip({ commit }, searchvalue) {
+    SearchShip({ commit }, searchvalue,searchwith) {
       axios
-        .get("/api/search/Ships/" + searchvalue)
+        .get("/api/search/Ships?value=" + searchvalue+"with="+searchwith)
         .then((respons) => {
           let resultShips = respons.data.Ships;
           commit("setShipsOutFromSearch", resultShips);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    //////////////////showmanagerShips////////////////////////
+    showmanagerShips({ commit }) {
+      axios
+        .get("http://localhost:3000/me/ships")
+        .then((respons) => {
+          let resultShips = respons.data.Ships;
+          commit("setmanagerShips", resultShips);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    ////////////////////////////////////
+    addmanagerShip(newship) {
+      console.log(newship);
+      axios
+        .post("http://localhost:3000/me/ships", {
+          name: newship.name,
+          description: newship.description,
+          blockDates: [],
+          salaryPerHour: newship.salaryPerHour,
+          location: newship.location,
+          country: newship.country,
+          capcity: newship.capcity,
+          availableFunctions: [],
+          numberOfHoursPerday: newship.numberOfHoursPerday,
+          offers: [],
+        })
+        .then((respons) => {
+          console.log(respons);
+          store.dispatch("Ship/showmanagerShips");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    //////////////////////////////////
+    deletemanagerShip(ship_id) {
+      axios
+        .delete("/api/deletemanagerShip" + ship_id)
+        .then((respons) => {
+          console.log(respons);
+          store.dispatch("Ship/showmanagerShips");
         })
         .catch((error) => {
           console.log(error);
@@ -67,5 +121,6 @@ export default {
     getShips: (state) => state.Ships,
     getShipsData: (state) => state.ShipsData,
     setShipsOutFromSearch: (state) => state.ShipsOutFromSearch,
+    getmanagerShips: (state) => state.managerShips,
   },
 };

@@ -1,14 +1,30 @@
   
 <template>
   <div class="navbar-container justify-content-center">
+    <img src="../assets/logo.png" class="imgg" />
     <div class="navbar-list">
       <ul>
         <router-link to="/Signup"  tag="li">
           <a> Sign up</a>
+          <a> {{ isLoggedIn }}</a>
         </router-link>
         <li id="separator">|</li>
         <router-link to="/Login" v-if="isLoggedIn != 'success'" tag="li">
           <a>Log In</a>
+        </router-link>
+        <router-link
+          to="/Manager"
+          v-if="isLoggedIn == 'success' && usertype == 2"
+          tag="li"
+        >
+          <a> My Home Page</a>
+        </router-link>
+        <router-link
+          to="/user"
+          v-if="isLoggedIn == 'success' && usertype == 1"
+          tag="li"
+        >
+          <a> My Home Page</a>
         </router-link>
       </ul>
     </div>
@@ -16,16 +32,25 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "HomeNavigation",
-  props: {
-    msg: String,
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "Authorization/GetStatus",
+      usertype: "Authorization/usertype",
+    }),
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.imgg {
+  width: 50px;
+  height: 50px;
+  float: left;
+}
 .navbar-container {
   width: 100%;
   margin: 0%;

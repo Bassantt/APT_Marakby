@@ -52,9 +52,6 @@ h4 {
 <script>
 export default {
   name: "ShipCard",
-  ata() {
-    return {ShipId: ""};
-  },
   props: {
     // image: {
     //   type: String

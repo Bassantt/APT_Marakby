@@ -1,16 +1,12 @@
 import axios from "axios";
 import store from "../store";
 import router from "../router/index";
-
 export default {
   namespaced: true,
   state: {
     status: "",
-    upgraded: "",
     token: localStorage.getItem("x-auth-token") || "",
-    resendtoken: localStorage.getItem("X-token") || "",
     User: {},
-    isEdited: "",
     deleted_Acount: true,
   },
   mutations: {
@@ -30,9 +26,6 @@ export default {
       state.token = "";
       state.User = {};
     },
-    is_edit(state, msg) {
-      state.isEdited = msg;
-    },
     deleted(state) {
       state.status = "";
       state.token = "";
@@ -43,11 +36,11 @@ export default {
     signUp({ commit }, user) {
       commit("auth_request");
       axios
-        .post("/sign_up", {
+        .post("http://localhost:3000/sign-up", {
           email: user.email,
           password: user.password,
           username: user.username,
-          type:user.type,
+          type: user.type,
           country: user.country,
         })
         .then((response) => {
@@ -63,26 +56,16 @@ export default {
           console.log(error);
         });
     },
-    get_user({ commit, dispatch }, flag) {
+    get_user({ commit }, flag) {
       const token = localStorage.getItem("x-auth-token");
       axios.defaults.headers.common["x-auth-token"] = token;
       commit("auth_request");
       axios
-        .get("/api/me-player")
+        .get("http://localhost:3000/me")
         .then((response) => {
           const user = response.data[0];
-          if (!localStorage.getItem("set-volume")) {
-            const setVol = user.player.volume / 10;
-            dispatch("Mediaplayer/update_volume", setVol, { root: true });
-            localStorage.setItem("set-volume", setVol);
-          }
-          if (!user.player.haveQueue) {
-            dispatch("Queue/CreateQueue", "", { root: true });
-          } else {
-            dispatch("Mediaplayer/get_currentsong", 2, { root: true });
-          }
           commit("auth_success", { token, user });
-          localStorage.setItem("is-artist", user.userType);
+          localStorage.setItem("is-manager", user.type);
           if (flag) router.replace("/");
         })
         .catch((error) => {
@@ -92,11 +75,13 @@ export default {
         });
     },
     login({ commit }, user) {
+      console.log(localStorage);
       commit("auth_request");
       axios
-        .post("/api/login", {
-          email: user.email,
+        .post("http://localhost:3000/login", {
           password: user.password,
+          email: user.email,
+          type: user.type,
         })
         .then((response) => {
           const token = response.data.token;
@@ -106,7 +91,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          commit("auth_error", "login_err");
+          commit("auth_error", "not user by this email");
           localStorage.removeItem("x-auth-token");
         });
     },
@@ -114,47 +99,22 @@ export default {
       commit("logout");
       axios.post("/api/user/logout", {}).then(() => {
         localStorage.removeItem("x-auth-token");
-        localStorage.removeItem("set-volume");
-        localStorage.removeItem("is-artist");
+        localStorage.removeItem("is-manager");
         delete axios.defaults.headers.common["x-auth-token"];
       });
     },
-    saveEdit({ commit }, user) {
-      axios
-        .put("/api/me/update", {
-          user,
-        })
-        .then(() => {
-          commit("is_edit", "success");
-          router.replace("/EmailConfirmation");
-        })
-        .catch((error) => {
-          if (
-            error.response.data.error.details[0].message ==
-            '"cardNumber" must be a credit card'
-          )
-            commit("is_edit", "carderror");
-          else if (
-            error.response.data.error.details[0].message.includes(
-              '"expiresDate" must be larger than or equal to'
-            )
-          )
-            commit("is_edit", "dateerror");
-          else commit("is_edit", "faild");
-        });
-    },
     removeuser({ commit, state }) {
       axios
-        .delete("api/remove")
+        .delete("http://localhost:3000/me/delete")
         .then(() => {
           state.deleted_Acount = true;
           commit("deleted");
-          router.replace("/signup");
+          router.replace("/");
           delete axios.defaults.headers.common["x-auth-token"];
         })
         .catch((error) => {
           console.log(error.response.status);
-          if (error.response.status == 400) {
+          if (error.response.status != 400) {
             state.deleted_Acount = false;
           }
         });
@@ -164,8 +124,8 @@ export default {
     Username: (state) => state.User.displayName,
     GetStatus: (state) => state.status,
     user: (state) => state.User,
-    isEdited: (state) => state.isEdited,
     userid: (state) => state.User._id,
+    usertype: (state) => state.User.type,
     deleted_Acountt: (state) => state.deleted_Acount,
   },
 };
