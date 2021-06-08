@@ -36,6 +36,7 @@ export default {
       console.log("I will delete");
 
       //will put dispatch here and send the ship id
+      this.$store.dispatch("Ship/deletemanagerShip",this.Ship_Id);
     },
   },
 };

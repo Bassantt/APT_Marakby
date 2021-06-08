@@ -8,23 +8,24 @@
       </div>
     </div>
     <div class="row">
-        <h1> YOUR SHIPS </h1>
+      <h1>YOUR SHIPS</h1>
       <ShipItem
         class="col-lg-100% col-md-60% col-xs-6"
-        v-for=" Ship in ships"
+        v-for="Ship in ships"
         :key="Ship.id"
         :Ship_Id="Ship.id"
         :Ship_Name="Ship.Name"
-        :Ship_Price="Ship.Price" 
+        :Ship_Price="Ship.Price"
         :ship_img="Ship.ImageSrc"
-        />
-    </div>    
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import AddShip from "@/components/AddShip.vue";
 import ShipItem from "@/components/ShipItem.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "Manager",
   components: {
@@ -55,7 +56,7 @@ export default {
           Rate: "5.0",
           Available: true,
         },
-         {
+        {
           id: "1",
           Name: "Normandy",
           Loc: "mazarita",
@@ -79,6 +80,14 @@ export default {
       ],
     };
   },
+ created: function () {
+    this.$store.dispatch("Ship/showmanagerShips");
+  },
+  computed: {
+    ...mapGetters({
+      Ships: "Ship/getmanagerShips",
+    }),
+  },
   methods: {
     LOgoutmanger() {
       console.log("logOUT");
@@ -89,9 +98,8 @@ export default {
 </script>
 
 <style scoped>
-.row
-{
-    margin-top:800px;
+.row {
+  margin-top: 800px;
 }
 .cont {
   height: calc(200vh);
