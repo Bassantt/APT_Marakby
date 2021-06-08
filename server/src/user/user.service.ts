@@ -35,9 +35,11 @@ export class UserService {
         const user = await this.UserRepository.findByEmail(loginDto.email);
         if (!user)
             throw new HttpException('not user by this email', HttpStatus.FORBIDDEN);
-        if (await bcrypt.compare(loginDto.password, user.password)) return user;
-        throw new HttpException('password is not correct', HttpStatus.FORBIDDEN);
-
+        if (!await bcrypt.compare(loginDto.password, user.password))
+            throw new HttpException('password is not correct', HttpStatus.FORBIDDEN);
+        if (user.type < loginDto.type)
+            throw new HttpException('your type is not correct', HttpStatus.FORBIDDEN);
+        return user;
     }
 
     async findAllUsers(): Promise<User[] | null> {
@@ -65,7 +67,7 @@ export class UserService {
 
     async getUserShips(userID) {
         const user = await this.getUserByID(userID);
-        if (!user || user.type != 2)
+        if (!user || user.type < 2)
             throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
         if (!user.ownShips)
             throw new HttpException('you dont have ships', HttpStatus.UNAUTHORIZED);
@@ -74,7 +76,7 @@ export class UserService {
 
     async checkUserIsManager(userID) {
         const user = await this.getUserByID(userID);
-        if (!user || user.type != 2)
+        if (!user || user.type < 2)
             throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
         return user;
     }

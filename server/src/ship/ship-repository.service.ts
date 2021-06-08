@@ -17,7 +17,7 @@ export class ShipRepository extends BaseRepository<Ship>  {
 
     async findById(_id: string) {
         if (!ObjectId.isValid(_id)) throw new HttpException('Invalid object id', HttpStatus.FORBIDDEN);
-        return await this.findOne({ _id: ObjectId(_id) });
+        return await this.findOne({ _id: _id });
     }
 
     async updateShipData(_id: string, Data: {}) {

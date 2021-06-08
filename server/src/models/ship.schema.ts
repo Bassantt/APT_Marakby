@@ -8,21 +8,16 @@ export class Ship {
   @prop({ required: true })
   name: string;
   @IsOptional()
-  @IsString()
   @prop({ options: true })
   @IsOptional()
   description?: string;
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
   @prop({ options: true })
   blockDates?: [Date];
   @IsOptional()
   @prop({ options: true })
-  @IsNumber()
   salaryPerHour?: Number;
   @IsOptional()
-  @IsString()
   @prop({ options: true })
   location?: string;
   @IsOptional()
