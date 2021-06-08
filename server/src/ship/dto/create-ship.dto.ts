@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsString, IsOptional, IsDate, Length, IsNumber } from 'class-validator';
+import { Ship } from 'src/models/ship.schema';
 export class ShipDto {
   @Length(2, 30)
   @IsString()
@@ -30,3 +31,4 @@ export class ShipDto {
   offers?: [{ description: string, salary: Number }];
 
 }
+
