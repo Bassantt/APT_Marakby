@@ -21,18 +21,19 @@ export class User {
   @Min(1)
   @Max(3)
   @IsNumber()
-  type: number;
-  @prop({ required: true })
+  type: number; // 1 as customer, 2 as manager ,3 as admin
   @Length(8, 17)
   @IsString()
-  Phone: string;
+  @prop({ options: true })
+  @IsOptional()
+  Phone?: string;
   @prop({ options: true })
   @IsOptional()
   @Length(7, 30)
   @IsString()
   creditCard?: string;
   @prop({ options: true })
-  @Length(0, 10) // 1 as customer, 2 as manager ,3 as admin
+  @Length(0, 10)
   @IsNumber()
   @prop({ default: 0 })
   rate?: number;
