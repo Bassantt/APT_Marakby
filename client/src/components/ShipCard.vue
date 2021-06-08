@@ -52,6 +52,9 @@ h4 {
 <script>
 export default {
   name: "ShipCard",
+  ata() {
+    return {ShipId: ""};
+  },
   props: {
     // image: {
     //   type: String
@@ -65,7 +68,7 @@ export default {
   },
   methods: {
     setShipId() {
-      this.$store.dispatch("Ship/setShip", ShipId);
+      this.$store.dispatch("Ship/setShip", this.ShipId);
     },
   },
 };

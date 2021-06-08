@@ -1,6 +1,7 @@
 <template>
   <div class="cont">
     <div class="row col-12 justify-content-center px-0 m-0"></div>
+    hii I am Admin
   </div>
 </template>
 
