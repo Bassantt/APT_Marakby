@@ -71,6 +71,7 @@ export class UserService {
             throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
         if (!user.ownShips)
             throw new HttpException('you dont have ships', HttpStatus.UNAUTHORIZED);
+        return user.ownShips;
 
     }
 
