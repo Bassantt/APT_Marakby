@@ -1,8 +1,9 @@
+  
 <template>
   <div class="navbar-container justify-content-center">
     <div class="navbar-list">
       <ul>
-        <router-link to="/" v-if="isLoggedIn != 'success'" tag="li">
+        <router-link to="/Signup"  tag="li">
           <a> Sign up</a>
         </router-link>
         <li id="separator">|</li>

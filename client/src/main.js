@@ -5,13 +5,16 @@ import store from "./store";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "normalize.css";
+import Vuelidate from 'vuelidate'
+import axios from 'axios'
 // import axios from "axios";
 
-// axios.defaults.baseURL = "http://34.206.123.67";
+//axios.defaults.baseURL = "http://localhost:3000";
 // Vue.prototype.$url = "http://34.206.123.67";
 
 Vue.config.productionTip = false;
-
+Vue.use(Vuelidate);
+Vue.prototype.$http = axios;
 var vm = new Vue({
   router,
   store,
@@ -19,3 +22,4 @@ var vm = new Vue({
 }).$mount("#app");
 
 global.vm = vm;
+axios.defaults.baseURL = "http://localhost:3000";

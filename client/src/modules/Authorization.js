@@ -42,13 +42,12 @@ export default {
     signUp({ commit }, user) {
       commit("auth_request");
       axios
-        .post("/api/sign_up", {
+        .post("/sign_up", {
           email: user.email,
           password: user.password,
           username: user.username,
-          gender: user.gender,
+          type:user.type,
           country: user.country,
-          birthday: user.birthday,
         })
         .then((response) => {
           ///////////////////
