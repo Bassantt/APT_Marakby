@@ -19,8 +19,8 @@ export class AuthController {
         if (!createdUser) throw new Error('user not found');
         this.email.sendEmail(createdUser.email, "", 'confirm', createdUser.userName);
         const token = await this.authService.signPayload({ _id: createdUser._id });
-        user.password = null;
-        return { token, user };
+        createdUser.password = null;
+        return { token, createdUser };
     }
 
     @Post('/login')
