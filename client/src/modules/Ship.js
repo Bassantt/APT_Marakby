@@ -7,7 +7,7 @@ export default {
     Ship_Id: "",
     ShipsData: [],
     ShipsOutFromSearch: [],
-    managerShips:[]
+    managerShips: [],
   },
   mutations: {
     setShips(state, resShips) {
@@ -68,55 +68,55 @@ export default {
         });
     },
 
-        //////////////////showmanagerShips////////////////////////
-        showmanagerShips({ commit }) {
-          axios
-            .get("/api/showmanagerShips" )
-            .then((respons) => {
-              let resultShips = respons.data.Ships;
-              commit("setmanagerShips", resultShips);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        },
-        ////////////////////////////////////
-        addmanagerShip(newship) {
-          console.log(newship);
-          axios
-            .post("/api/addmanagerShip", {
-              Name: newship.Name,
-              Loc: newship.Loc,
-              Price: newship.Price,
-              Description: newship.Description,
-              Rate: 5.0,
-              Available: true,
-            } )
-            .then((respons) => {
-              console.log(respons)
-              store.dispatch("Ship/showmanagerShips");
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        },
-        //////////////////////////////////
-        DeleteShip(ship_id) {
-          axios
-            .delete("/api/showmanagerShips"+ship_id)
-            .then((respons) => {
-              console.log(respons)
-              store.dispatch("Ship/showmanagerShips");
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        },
+    //////////////////showmanagerShips////////////////////////
+    showmanagerShips({ commit }) {
+      axios
+        .get("/api/showmanagerShips")
+        .then((respons) => {
+          let resultShips = respons.data.Ships;
+          commit("setmanagerShips", resultShips);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    ////////////////////////////////////
+    addmanagerShip(newship) {
+      console.log(newship);
+      axios
+        .post("/api/addmanagerShip", {
+          Name: newship.Name,
+          Loc: newship.Loc,
+          Price: newship.Price,
+          Description: newship.Description,
+          Rate: 5.0,
+          Available: true,
+        })
+        .then((respons) => {
+          console.log(respons);
+          store.dispatch("Ship/showmanagerShips");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    //////////////////////////////////
+    deletemanagerShip(ship_id) {
+      axios
+        .delete("/api/deletemanagerShip" + ship_id)
+        .then((respons) => {
+          console.log(respons);
+          store.dispatch("Ship/showmanagerShips");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   getters: {
     getShips: (state) => state.Ships,
     getShipsData: (state) => state.ShipsData,
     setShipsOutFromSearch: (state) => state.ShipsOutFromSearch,
-    getmanagerShips:(state) => state.managerShips,
+    getmanagerShips: (state) => state.managerShips,
   },
 };

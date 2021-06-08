@@ -67,7 +67,7 @@ export default {
       console.log(newShip);
 
       //will put dispatch here
-      this.$store.dispatch("Ship/addmanagerShip",newShip);
+      this.$store.dispatch("Ship/addmanagerShip", newShip);
     },
   },
 };
