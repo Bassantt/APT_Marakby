@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Get, Put, Request, Param, Body, Post, Delete } from '@nestjs/common';
+import { Controller, UseGuards, Get, Put, Request, Param, Body, Post, Delete, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ShipDto } from './dto/create-ship.dto';
 import { ShipService } from './Ship.service';
@@ -64,6 +64,18 @@ export class ShipController {
     @Get('Ships')
     async all(): Promise<Ship[] | null> {
         return await this.shipService.findAllShips();
+    }
+    @Get('ships/:_id')
+    async getShip(@Param('_id') shidID: string) {
+        return await this.shipService.getShipByID(shidID);
+    }
+
+    @Get('/search/ships/')
+    async getShipsBySearch(@Query('search_by') searchByCountry: boolean, @Query('name') name: string) {
+        if (searchByCountry == true)
+            return await this.shipService.searchForShipByCountry(name);
+        else
+            return await this.shipService.searchForShipByname(name);
     }
 
 }

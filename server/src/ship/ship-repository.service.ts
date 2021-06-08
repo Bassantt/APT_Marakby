@@ -37,5 +37,12 @@ export class ShipRepository extends BaseRepository<Ship>  {
         return await this.deleteMany(selector);
     }
 
+    async findByCountry(country) {
+        return await this.find({ country: country });
+    }
+
+    async findByName(name) {
+        return await this.find({ name: name });
+    }
 
 }
