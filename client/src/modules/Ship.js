@@ -56,9 +56,9 @@ export default {
         });
     },
     //////////////////search for ship with name////////////////////////
-    SearchShip({ commit }, searchvalue) {
+    SearchShip({ commit }, searchvalue,searchwith) {
       axios
-        .get("/api/search/Ships/" + searchvalue)
+        .get("/api/search/Ships?value=" + searchvalue+"with="+searchwith)
         .then((respons) => {
           let resultShips = respons.data.Ships;
           commit("setShipsOutFromSearch", resultShips);
@@ -71,7 +71,7 @@ export default {
     //////////////////showmanagerShips////////////////////////
     showmanagerShips({ commit }) {
       axios
-        .get("/api/showmanagerShips")
+        .get("http://localhost:3000/me/ships")
         .then((respons) => {
           let resultShips = respons.data.Ships;
           commit("setmanagerShips", resultShips);
@@ -84,13 +84,17 @@ export default {
     addmanagerShip(newship) {
       console.log(newship);
       axios
-        .post("/api/addmanagerShip", {
-          Name: newship.Name,
-          Loc: newship.Loc,
-          Price: newship.Price,
-          Description: newship.Description,
-          Rate: 5.0,
-          Available: true,
+        .post("http://localhost:3000/me/ships", {
+          name: newship.name,
+          description: newship.description,
+          blockDates: [],
+          salaryPerHour: newship.salaryPerHour,
+          location: newship.location,
+          country: newship.country,
+          capcity: newship.capcity,
+          availableFunctions: [],
+          numberOfHoursPerday: newship.numberOfHoursPerday,
+          offers: [],
         })
         .then((respons) => {
           console.log(respons);

@@ -10,12 +10,29 @@
     <div class="justify-content-center cont">
       <!-- login form -->
       <form>
-        <input type="text" placeholder="Email address" required id="email" />
+        <input
+          type="text"
+          v-model="email"
+          placeholder="Email address"
+          required
+          id="email"
+        />
         <br />
         <p id="req_email" class="invalid">Please enter your email address.</p>
-        <input type="password" placeholder="Password" required id="password" />
+        <input
+          type="password"
+          v-model="password"
+          placeholder="Password"
+          required
+          id="password"
+        />
         <br />
         <p class="invalid" id="req_password">Please enter your password.</p>
+        <h4>You are</h4>
+        <select v-model="type" id="type">
+          <option value="1" selected>user</option>
+          <option value="2">manager</option>
+        </select>
         <div id="wrap">
           <button
             @click.prevent="login()"
@@ -26,8 +43,9 @@
             LOG IN
           </button>
         </div>
+        <h4>{{ isLoggedIn }}</h4>
         <h2>Don't have an account?</h2>
-        <router-link class="costum-btn" id="signup_btn" to="" tag="button">
+        <router-link class="costum-btn" id="signup_btn" to="/" tag="button">
           SIGN up
         </router-link>
       </form>
@@ -127,6 +145,10 @@ a {
 a:hover {
   color: #0f0f0f;
 }
+h4,
+p {
+  color: white;
+}
 </style>
 
 <script>
@@ -137,6 +159,7 @@ export default {
     return {
       email: "",
       password: "",
+      type: 1,
       //validation
       trigger_validation: false,
       can_submit: true,
@@ -145,6 +168,9 @@ export default {
 
   methods: {
     login() {
+      console.log(this.email);
+      console.log(this.password);
+      console.log(this.type);
       this.trigger_validation = true;
       this.can_submit = true;
       this.req_email;
@@ -154,6 +180,7 @@ export default {
           let user = {
             email: this.email,
             password: this.password,
+            type: this.type,
           };
           this.$store.dispatch("Authorization/login", user);
         }

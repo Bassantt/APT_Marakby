@@ -57,7 +57,7 @@ export default {
           Available: true,
         },
         {
-          id: "1",
+          id: "3",
           Name: "Normandy",
           Loc: "mazarita",
           ImageSrc: "../assets/ship4.jpg",
@@ -68,7 +68,7 @@ export default {
         },
 
         {
-          id: "2",
+          id: "4",
           Name: "amirelb7ar",
           Loc: "kotmoto",
           ImageSrc: "../assets/ship5.jpg",
@@ -99,7 +99,7 @@ export default {
 
 <style scoped>
 .row {
-  margin-top: 800px;
+  margin-top: 1000px;
 }
 .cont {
   height: calc(200vh);

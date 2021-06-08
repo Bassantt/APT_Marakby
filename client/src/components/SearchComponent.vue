@@ -1,6 +1,9 @@
 <template>
   <div class="search_contaner row col-12" id="search_contaner">
-    <i class="fa fa-search hover"></i>
+    <select v-model="searchwith" id="type">
+          <option value="1" selected>search with name</option>
+          <option value="2">search with country</option>
+    </select>
     <input
       testid="search-box"
       id="search-box"
@@ -40,7 +43,7 @@
   outline: none;
 }
 #search-box {
-  background-color: rgb(37, 91, 122);
+  background-color:transparent;
   width: 80%;
   height: 100%;
   border: rgba(0, 0, 0, 0.041);
@@ -76,7 +79,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   width: 40%;
-  height: 50px;
+  height: 100px;
   margin-left: 10%;
   margin-top: 400px;
   margin-bottom: 15px;
@@ -95,14 +98,14 @@
 export default {
   name: "searchcomponent",
   data() {
-    return { Value: "" };
+    return { Value: "",searchwith:1 };
   },
   methods: {
     reset() {
       this.Value = "";
     },
     Search() {
-      this.$router.replace("/SearchResult/" + this.Value);
+      this.$router.replace("/SearchResult/" + this.Value +"/"+ this.searchwith);
     },
   },
 };
