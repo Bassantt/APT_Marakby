@@ -43,7 +43,7 @@
   outline: none;
 }
 #search-box {
-  background-color: rgb(37, 91, 122);
+  background-color:transparent;
   width: 80%;
   height: 100%;
   border: rgba(0, 0, 0, 0.041);
@@ -79,7 +79,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   width: 40%;
-  height: 50px;
+  height: 100px;
   margin-left: 10%;
   margin-top: 400px;
   margin-bottom: 15px;
@@ -105,7 +105,7 @@ export default {
       this.Value = "";
     },
     Search() {
-      this.$router.replace("/SearchResult/" + this.Value + this.searchwith);
+      this.$router.replace("/SearchResult/" + this.Value +"/"+ this.searchwith);
     },
   },
 };
