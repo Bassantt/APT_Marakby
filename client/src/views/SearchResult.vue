@@ -9,6 +9,7 @@
     </div>
     <div class="Brows-container">
       <div class="row">
+        {{this.$route.params.searchwith}}
         <h1>The result for search is {{ this.$route.params.Searchvalue }}</h1>
         <h2 v-if="true">Ships</h2>
       </div>
@@ -49,7 +50,7 @@ export default {
     }),
   },
   created: function () {
-    this.$store.dispatch("Ship/SearchShip", this.$route.params.Searchvalue);
+    this.$store.dispatch("Ship/SearchShip", this.$route.params.Searchvalue,this.$route.params.searchwith);
   },
 };
 </script>

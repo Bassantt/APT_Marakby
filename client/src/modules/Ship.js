@@ -56,9 +56,9 @@ export default {
         });
     },
     //////////////////search for ship with name////////////////////////
-    SearchShip({ commit }, searchvalue) {
+    SearchShip({ commit }, searchvalue,searchwith) {
       axios
-        .get("/api/search/Ships/" + searchvalue)
+        .get("/api/search/Ships?value=" + searchvalue+"with="+searchwith)
         .then((respons) => {
           let resultShips = respons.data.Ships;
           commit("setShipsOutFromSearch", resultShips);
