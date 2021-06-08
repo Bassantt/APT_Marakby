@@ -4,6 +4,7 @@ import store from "../store";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Admin from "../views/Admin.vue";
+import Manager from "../views/Manager.vue";
 import SearchResult from "../views/SearchResult.vue";
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/SearchResult/:Searchvalue",
     name: "SearchResult",
     component: SearchResult,
+  },
+  {
+    path: "/Manager",
+    name: "Manager",
+    component: Manager,
   },
 ];
 
