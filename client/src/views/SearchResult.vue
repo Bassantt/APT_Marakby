@@ -23,7 +23,7 @@
           :ShipId="Ship._id"
         />
       </div>
-      <div class="row" v-if="Ships != []">no Srearch Result</div>
+      <div class="row" v-if="Ships != []"><h1>no Srearch Result</h1></div>
     </div>
   </div>
 </template>

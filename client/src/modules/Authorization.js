@@ -135,5 +135,6 @@ export default {
     userid: (state) => state.User._id,
     usertype: (state) => state.User.type,
     deleted_Acountt: (state) => state.deleted_Acount,
+    getuser_discount:(state) => state.User.discond
   },
 };

@@ -112,7 +112,6 @@ export default {
           offers: [],
         })
         .then((respons) => {
-          commit("done",true)
           console.log(respons);
           store.dispatch("Ship/showmanagerShips");
         })
@@ -132,11 +131,49 @@ export default {
           console.log(error);
         });
     },
+    getShipInfo({ commit }, ShipId) {
+      axios
+        .get("http://localhost:3000/ships/" + ShipId)
+        .then((respons) => {
+          console.log(respons);
+          let resShipsData = respons.data;
+          commit("setShipsData", resShipsData);
+        })
+        .catch((error) => {
+          commit("setShipsData", []);
+          console.log(error);
+        });
+    },
+    //////////////////////////////////////////////
+    bookShip({ commit },shipId,bookinfo) {
+      console.log(newship);
+      const token = localStorage.getItem("Authorization");
+      console.log(token);
+      axios.defaults.headers.common["Authorization"] = token;
+      axios
+        .post("http://localhost:3000/me/book/"+shipId, {
+            bookDate: bookinfo.bookDate,
+            salary:bookinfo.salary,
+            availableFunctions:["Party","food","light"] ,
+            fromHour:bookinfo.fromHour,
+            endHour:bookinfo.endHour
+        })
+        .then((respons) => {
+          commit("done",true)
+          console.log(respons);
+          store.dispatch("Ship/showmanagerShips");
+        })
+        .catch((error) => {
+          commit("done",false)
+          console.log(error,"hiii");
+        });
+    },
   },
   getters: {
     getShips: (state) => state.Ships,
     getShipsData: (state) => state.ShipsData,
     setShipsOutFromSearch: (state) => state.ShipsOutFromSearch,
     getmanagerShips: (state) => state.managerShips,
+    donebook:(state) => state.done
   },
 };

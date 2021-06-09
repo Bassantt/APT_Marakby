@@ -57,16 +57,6 @@
                 <label
                   class="col-form-label col-form-label-lg"
                   style="color: #fdf7fc"
-                  >Date</label
-                >
-                <label type="text" class="form-control form-control-lg"
-                  >{{ ship_blockDate }}
-                </label>
-              </div>
-              <div class="col-12 form-group">
-                <label
-                  class="col-form-label col-form-label-lg"
-                  style="color: #fdf7fc"
                   >Salary Per Hour</label
                 >
                 <label type="text" class="form-control form-control-lg"
@@ -93,13 +83,18 @@
                   >{{ ship_capacity }}
                 </label>
               </div>
-              <div class="col-2 form-group text-center">
-                <button
+              <div class="col-6 form-group text-center">
+                <router-link to="/Login" v-if="isLoggedIn != 'success'" tag="li">
+                <a>Please Login First To can Book</a>
+                </router-link>
+                <router-link
+                  v-if="isLoggedIn == 'success'"
+                  :to="{ path: '/Book/' + this.$route.params.shipID }"
                   class="btn-vue1 form-control form-control-lg col-2"
-                  style="margin: 4"
+                  id="carglink"
+                  testid="cardlink"
+                  >Book</router-link
                 >
-                  Get It
-                </button>
               </div>
             </div>
           </form>
@@ -124,6 +119,7 @@ export default {
       ship_salaryPerHour: "shipview/ship_salaryPerHour",
       ship_country: "shipview/ship_country",
       ship_capacity: "shipview/ship_capacity",
+      isLoggedIn: "Authorization/GetStatus",
     }),
   },
   created: function () {
@@ -139,7 +135,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  height: 700px;
+  height: calc(200vh);
   color: #2c3e50;
   background: rgb(37, 91, 122);
 }
@@ -168,5 +164,4 @@ export default {
   background: rgb(132, 184, 226);
 }
 </style>
-<!-- <router-link to="/">Home</router-link> |
-     <router-link to="/about">About</router-link> -->
+

@@ -41,12 +41,6 @@ export default {
       Ships: "Ship/getmanagerShips"
     }),
   },
-  methods: {
-    LOgoutmanger() {
-      console.log("logOUT");
-      //will put dispatch here
-    },
-  },
 };
 </script>
 
