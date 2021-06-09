@@ -31,11 +31,11 @@ export class ShipService {
         await this.updateShip({ offers: ship.offers }, shipId)
     }
 
-    async addFunctionToShip(shipId, new_fun: { salary: Number; discription: string; }) {
+    /*async addFunctionToShip(shipId, new_fun: { salary: Number; discription: string; }) {
         const ship = await this.getShipByID(shipId);
         ship.availableFunctions.push(new_fun);
         await this.updateShip({ availableFunctions: ship.availableFunctions }, shipId)
-    }
+    }*/
 
     async findAllShips(): Promise<Ship[] | null> {
         return await this.ShipRepository.findAll();

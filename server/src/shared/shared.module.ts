@@ -7,6 +7,7 @@ import { Bookings } from "../models/booking.schema";
 import { TypegooseModule } from "nestjs-typegoose";
 import { UserRepository } from '../user/user-repository.service';
 import { ShipRepository } from '../ship/ship-repository.service';
+import { BookingsRepository } from '../bookings/bookings-repository.service';
 
 @Module({
     imports: [
@@ -18,7 +19,8 @@ import { ShipRepository } from '../ship/ship-repository.service';
         UserService,
         UserRepository,
         ShipRepository,
-        ShipService
+        ShipService,
+        BookingsRepository
     ]
 })
 export class SharedModule { }

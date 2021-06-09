@@ -8,6 +8,7 @@ import { Ship } from "../models/ship.schema";
 import { Bookings } from "../models/booking.schema";
 import { SharedModule } from '../shared/shared.module';
 import { ShipRepository } from '../ship/ship-repository.service';
+import { BookingsRepository } from '../bookings/bookings-repository.service';
 
 @Module({
   imports: [SharedModule,
@@ -17,7 +18,8 @@ import { ShipRepository } from '../ship/ship-repository.service';
   providers: [
     UserService,
     UserRepository,
-    ShipRepository
+    ShipRepository,
+    BookingsRepository
   ],
   controllers: [UserController]
 })

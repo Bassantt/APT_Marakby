@@ -11,6 +11,8 @@ import { SharedModule } from '../shared/shared.module';
 import { Email } from './send-email.service';
 import { UserRepository } from '../user/user-repository.service';
 import { ShipRepository } from '../ship/ship-repository.service';
+import { BookingsRepository } from '../bookings/bookings-repository.service';
+
 @Module({
   imports: [SharedModule, SharedModule,
     TypegooseModule.forFeature([User]),
@@ -23,7 +25,8 @@ import { ShipRepository } from '../ship/ship-repository.service';
     UserService,
     Email,
     UserRepository,
-    ShipRepository
+    ShipRepository,
+    BookingsRepository
   ],
   controllers: [AuthController]
 })

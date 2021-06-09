@@ -43,13 +43,13 @@ export class ShipController {
         return;
     }
 
-    @UseGuards(AuthGuard('jwt'))
-    @Put('/me/ships/:_id/functions')
-    async updateShipFunctions(@Param('_id') ShipId: string, @Request() req, @Body() newFunction: { salary: Number; discription: string; }) {
-        await this.userService.checkOwner(req.user._id, ShipId);
-        await this.shipService.addFunctionToShip(ShipId, newFunction);
-        return;
-    }
+    /*  @UseGuards(AuthGuard('jwt'))
+      @Put('/me/ships/:_id/functions')
+      async updateShipFunctions(@Param('_id') ShipId: string, @Request() req, @Body() newFunction: { salary: Number; discription: string; }) {
+          await this.userService.checkOwner(req.user._id, ShipId);
+          await this.shipService.addFunctionToShip(ShipId, newFunction);
+          return;
+      }*/
 
     @UseGuards(AuthGuard('jwt'))
     @Delete('/me/ships/:_id')
@@ -77,6 +77,14 @@ export class ShipController {
             return await this.shipService.searchForShipByCountry(name);
         else
             return await this.shipService.searchForShipByname(name);
+    }
+
+    @Get('/ships')
+    async Ships(@Request() req) {
+        const ships_data = await this.shipService.findAllShips(); // get ships by arry of ids
+        if (!(ships_data == [] || !ships_data) && ships_data.length > 10)
+            return ships_data.slice(0, ships_data.length > 15 ? 11 : ships_data.length);
+        return ships_data;
     }
 
 }

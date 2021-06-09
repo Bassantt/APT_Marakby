@@ -45,4 +45,12 @@ export class ShipRepository extends BaseRepository<Ship>  {
         return await this.find({ name: name });
     }
 
+    async addBooking(shipId, bookingId) {
+        return await this.pushInArray(shipId, { $push: { bookings: bookingId } });
+    }
+
+    async updateArrayDataInShip(shipId, Data) {
+        return await this.pushInArray(shipId, { $push: Data });
+    }
+
 }

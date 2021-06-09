@@ -6,16 +6,12 @@ export class ShipDto {
   @IsString()
   name: string;
   @IsOptional()
-  @IsString()
-  @IsOptional()
   description?: string;
   @IsOptional()
-  blockDates?: {};
+  blockDates?: {}; // date as a key of array od {from : ,to: } available hours not block
   @IsOptional()
-  @IsNumber()
   salaryPerHour?: Number;
   @IsOptional()
-  @IsString()
   location?: string;
   @IsOptional()
   @IsString()
@@ -23,9 +19,35 @@ export class ShipDto {
   @IsOptional()
   @IsNumber()
   capcity?: Number;
+  /////////////////for party//////////////////////////
   @IsOptional()
-  availableFunctions?: [{ salary: Number, discription: string }];
+  partySalary: Number;
   @IsOptional()
+  soundSalary: Number;
+  @IsOptional()
+  lightSalary: Number;
+  @IsOptional()
+  foodPartySalary: Number;
+  @IsOptional()
+  decorationSalary: Number;
+  ////////////////////////for meeting/////////////////////
+  @IsOptional()
+  meetingSalary: Number;
+  @IsOptional()
+  hallSalary: Number;
+  @IsOptional()
+  foodMeetingSalary: Number;
+  ////////////////////////for travel /////////////////////
+  @IsOptional()
+  travelSalary: Number;
+  @IsOptional()
+  roomSalary: Number;
+  @IsOptional()
+  foodTravelSalary: Number;
+  @IsOptional()
+  swingSalary: Number;
+  @IsOptional()
+  @IsNumber()
   numberOfHoursPerday?: Number;
   @IsOptional()
   offers?: [{ description: string, salary: Number }];

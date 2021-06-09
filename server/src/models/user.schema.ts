@@ -1,6 +1,7 @@
 import { prop, Ref } from '@typegoose/typegoose';
 import { Ship } from './ship.schema';
 import { IsString, IsEmail, IsOptional, Length, IsNumber, Min, Max } from 'class-validator';
+import { Bookings } from './booking.schema';
 
 export class User {
   @prop({ required: true })
@@ -37,12 +38,14 @@ export class User {
   @IsNumber()
   @prop({ default: 0 })
   rate?: number;
-  @prop({ ref: User })
-  interstedManagers?: [Ref<User>];
   @prop({ ref: Ship })
   interstedShips?: [Ref<Ship>];
+  @prop({ ref: User })
+  interstedManagers?: [Ref<User>];
   @prop({ required: true })
   @Length(3, 30)
   @IsString()
   country: string;
+  @prop({ ref: Bookings })
+  bookings?: [Ref<Bookings>];
 }

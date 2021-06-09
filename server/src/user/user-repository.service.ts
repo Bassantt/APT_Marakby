@@ -28,5 +28,13 @@ export class UserRepository extends BaseRepository<User>  {
         return await this.create(userData);
     }
 
+    async addBooking(userId, bookingId) {
+        return await this.pushInArray(userId, { $push: { bookings: bookingId } });
+    }
+
+    async updateArrayDataInUser(userId, Data) {
+        return await this.pushInArray(userId, { $push: Data });
+    }
+
 
 }

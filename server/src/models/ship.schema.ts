@@ -1,7 +1,6 @@
-import { prop } from "@typegoose/typegoose";
-import { Type } from 'class-transformer';
-import { IsString, IsOptional, IsDate, Length, IsNumber } from 'class-validator';
-
+import { prop, Ref } from "@typegoose/typegoose";
+import { IsString, IsOptional, Length, IsNumber } from 'class-validator';
+import { Bookings } from './booking.schema';
 export class Ship {
   @Length(2, 30)
   @IsString()
@@ -28,10 +27,46 @@ export class Ship {
   @prop({ options: true })
   @IsNumber()
   capcity?: Number;
+  /////////////////for party//////////////////////////
   @IsOptional()
-  @IsString()
   @prop({ options: true })
-  availableFunctions?: [{ salary: Number, discription: string }];
+  partySalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  soundSalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  lightSalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  foodPartySalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  decorationSalary: Number;
+  ////////////////////////for meeting/////////////////////
+  @IsOptional()
+  @prop({ options: true })
+  meetingSalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  hallSalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  foodMeetingSalary: Number;
+  ////////////////////////for travel /////////////////////
+  @IsOptional()
+  @prop({ options: true })
+  travelSalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  roomSalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  foodTravelSalary: Number;
+  @IsOptional()
+  @prop({ options: true })
+  swingSalary: Number;
+
   @IsOptional()
   @prop({ options: true })
   @IsNumber()
@@ -39,4 +74,6 @@ export class Ship {
   @IsOptional()
   @prop({ options: true })
   offers?: [{ description: string, salary: Number }];
+  @prop({ ref: Bookings })
+  bookings?: [Ref<Bookings>];
 }

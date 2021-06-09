@@ -46,5 +46,11 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T>  {
             return true;
         return false;
     }
+    async pushInArray(id, updateInfo) {
+        if (await this._Model.findByIdAndUpdate(id, updateInfo))
+            return true;
+        return false;
+    }
+
 
 }
