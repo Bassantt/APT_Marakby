@@ -180,7 +180,7 @@ export default {
           let user = {
             email: this.email,
             password: this.password,
-            type: this.type,
+            type: parseInt(this.type),
           };
           this.$store.dispatch("Authorization/login", user);
         }

@@ -20,13 +20,17 @@
     >
       <span
         aria-hidden="true"
-        style="font-size: 25px; font-weight: 50px; color: black"
+        style="font-size: 25px; font-weight: 50px; color: black;margin-top:25px;"
         >GO</span
       >
     </button>
   </div>
 </template>
 <style scoped>
+#type
+{
+  border-radius: 10px;
+}
 .search {
   border-radius: 50px;
   background-color: rgba(207, 223, 204, 0.288);
@@ -45,7 +49,7 @@
 #search-box {
   background-color:transparent;
   width: 80%;
-  height: 100%;
+  height: 70%;
   border: rgba(0, 0, 0, 0.041);
   cursor: text;
   border-radius: 17px;
@@ -79,7 +83,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   width: 40%;
-  height: 100px;
+  height: 80px;
   margin-left: 10%;
   margin-top: 400px;
   margin-bottom: 15px;

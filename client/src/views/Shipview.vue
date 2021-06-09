@@ -113,19 +113,6 @@
 import { mapGetters } from "vuex";
 export default {
   name: "Shipview",
-  data: function () {
-    return {
-      ship_id: 0,
-
-      ship_name: "Titanik",
-      ship_image: "../assets/logo.png",
-      ship_description: "night ship",
-      ship_blockDate: "10/2/2022",
-      ship_salaryPerHour: 1000,
-      ship_country: "Egypt",
-      ship_capacity: 50,
-    };
-  },
   computed: {
     ...mapGetters({
       ship_name: "shipview/ship_name",
@@ -145,7 +132,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .shapeview {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
