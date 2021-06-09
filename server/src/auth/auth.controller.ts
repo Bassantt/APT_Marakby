@@ -17,7 +17,7 @@ export class AuthController {
     async create(@Body() user: RegisterDto) {
         const createdUser = await this.userService.createUser(user);
         if (!createdUser) throw new Error('user not found');
-        this.email.sendEmail(createdUser.email, "", 'confirm', createdUser.userName);
+        //        this.email.sendEmail(createdUser.email, "", 'confirm', createdUser.userName);
         const token = await this.authService.signPayload({ _id: createdUser._id });
         createdUser.password = null;
         return { token, createdUser };
@@ -29,6 +29,7 @@ export class AuthController {
         if (!user) throw new Error('user not found');
         const token = await this.authService.signPayload({ _id: user._id, });
         user.password = null;
+        user.type = Number(loginDto.type);
         return { token, user };
     }
 
@@ -38,7 +39,7 @@ export class AuthController {
     async delete(@Request() req) {
         const user = await this.userService.getUserByID(req.user._id);
         await this.userService.deleteUser(req.user._id);
-        this.email.sendEmail(user.email, "", "Delete account", user.userName);
+        // this.email.sendEmail(user.email, "", "Delete account", user.userName);
         return;
     }
 
