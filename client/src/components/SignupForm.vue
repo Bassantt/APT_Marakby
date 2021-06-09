@@ -8,10 +8,9 @@
         >
         <input
           type="text"
-          v-model.trim="$v.userName.$model"
+          v-model="userName"
           :class="{ 'is-invalid': validationStatus($v.userName) }"
           class="form-control form-control-lg"
-          
         />
         <div v-if="!$v.userName.required" class="invalid-feedback">
           The User Name field is required.
@@ -23,7 +22,7 @@
         >
         <input
           type="email"
-          v-model.trim="$v.email.$model"
+          v-model="email"
           :class="{ 'is-invalid': validationStatus($v.email) }"
           class="form-control form-control-lg"
         />
@@ -40,7 +39,7 @@
           >Country <span class="text-danger">*</span></label
         >
         <select
-          v-model.trim="$v.country.$model"
+          v-model="country"
           :class="{ 'is-invalid': validationStatus($v.country) }"
           class="form-control form-control-lg"
         >
@@ -68,7 +67,7 @@
         >
         <input
           type="password"
-          v-model.trim="$v.password.$model"
+          v-model="password"
           :class="{ 'is-invalid': validationStatus($v.password) }"
           class="form-control form-control-lg"
         />
@@ -86,25 +85,29 @@
       </div>
       <div class="col-12 form-group">
         <label class="col-form-label col-form-label-lg"
-          >Type<span class="text-danger">*</span></label>
-        <div class="form-control form-control-lg" style="border:2px solid black width:5px">
-          <label class="radio-inline ">
+          >Type<span class="text-danger">*</span></label
+        >
+        <div
+          class="form-control form-control-lg"
+          style="border:2px solid black width:5px"
+        >
+          <label class="radio-inline">
             <input
               type="radio"
               v-model="type"
               name="optradio"
-              value=1
+              value="1"
               style="margin-right: 4"
               checked
               required
-            /><strong> User  </strong>
+            /><strong> User </strong>
           </label>
           <label class="radio-inline">
             <input
               type="radio"
               v-model="type"
               name="optradio"
-              value=2
+              value="3"
               style="margin-right: 4"
               required
             />
@@ -115,7 +118,7 @@
               type="radio"
               v-model="type"
               name="optradio"
-              value=3
+              value="2"
               style="margin-right: 4"
               required
             />
@@ -126,7 +129,7 @@
           </div>-->
         </div>
       </div>
-                    <div class="col-12 form-group text-center">
+      <div class="col-12 form-group text-center">
         <button class="btn-lg col-4">Sign Up</button>
         <!--  <button
           @click.prevent="signUp()"
@@ -159,18 +162,18 @@ export default {
       password: "",
       countryList: [
         //  { text: "Choose a country", value: "0", disabled: true },
-        { text: "Egypt", value: "eg", disabled: false },
-        { text: "France", value: "fr", disabled: false },
-        { text: "USA", value: "us", disabled: false },
-        { text: "Britain", value: "uk", disabled: false },
-        { text: "Canada", value: "ca", disabled: false },
-        { text: "Australia", value: "au", disabled: false },
-        { text: "Saudi Arabia", value: "sa", disabled: false },
-        { text: "China", value: "cn", disabled: false },
-        { text: "Japan", value: "jp", disabled: false },
-        { text: "Korea", value: "kp", disabled: false },
-        { text: "Mexico", value: "mx", disabled: false },
-        { text: "Brazil", value: "br", disabled: false },
+        { text: "Egypt", value: "Egypt", disabled: false },
+        { text: "France", value: "France", disabled: false },
+        { text: "USA", value: "USA", disabled: false },
+        { text: "Britain", value: "Britain", disabled: false },
+        { text: "Canada", value: "Canada", disabled: false },
+        { text: "Australia", value: "Australia", disabled: false },
+        { text: "Saudi Arabia", value: "Saudi Arabia", disabled: false },
+        { text: "China", value: "China", disabled: false },
+        { text: "Japan", value: "Japan", disabled: false },
+        { text: "Korea", value: "Korea", disabled: false },
+        { text: "Mexico", value: "Mexico", disabled: false },
+        { text: "Brazil", value: "Brazil", disabled: false },
       ],
     };
   },
@@ -194,46 +197,30 @@ export default {
 */
 
   methods: {
-    resetData: function () {
-      this.userName = "";
-      this.email = "";
-      this.country = "";
-      this.password = "";
-      this.type = 0;
-    },
     validationStatus: function (validation) {
       return typeof validation != "undefined" ? validation.$error : false;
     },
     submit: function () {
+      console.log(this.type);
       this.$v.$touch();
       if (this.$v.$pendding || this.$v.$error) return;
       alert("you are successfully signed in ^^");
       setTimeout(() => {
         let newuser = {
-          username: this.username,
+          username: this.userName,
           password: this.password,
           country: this.country,
           email: this.email,
-          type:this.type
+          type: parseInt(this.type),
         };
+        console.log(newuser);
         this.$store.dispatch("Authorization/signUp", newuser);
-        this.$router.replace("/Login");
       }, 200);
-
-      this.$v.$reset();
-      this.resetData();
     },
   },
 };
 </script>
-<style>
-/*.btn-vue {
-  background-color: rgb(37, 91, 122);
-  color: #fdf7fc;
-  font-weight: bold;
-
-}
-*/
+<style scoped>
 button {
   background-color: rgb(33, 102, 141);
   max-width: 120px;
@@ -243,11 +230,9 @@ button {
   height: 130%;
   max-height: 200px;
 }
-/*#btn-vue:hover {
-  background-color: #77b3eb;
-}*/
-#type_radio{
-  border-block:3px solid black;
+
+#type_radio {
+  border-block: 3px solid black;
   border-block-color: rgb(37, 91, 122);
 }
 </style>

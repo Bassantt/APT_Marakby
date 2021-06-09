@@ -1,7 +1,7 @@
 <template>
   <div class="cont">
+    <HomeNavigation id="nav" />
     <img src="../assets/logo.png" />
-    <button class="btn" @click="LOgoutmanger">Log out</button>
     <div>
       <div class="home row col-12 justify-content-center px-0 m-0">
         <AddShip />
@@ -25,12 +25,14 @@
 <script>
 import AddShip from "@/components/AddShip.vue";
 import ShipItem from "@/components/ShipItem.vue";
+import HomeNavigation from "@/components/HomeNavigationBar.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "Manager",
   components: {
     AddShip,
     ShipItem,
+    HomeNavigation,
   },
   data() {
     return {
@@ -98,6 +100,9 @@ export default {
 </script>
 
 <style scoped>
+#nav {
+  z-index: 0;
+}
 .row {
   margin-top: 1000px;
 }

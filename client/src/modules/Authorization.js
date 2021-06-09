@@ -5,7 +5,8 @@ export default {
   namespaced: true,
   state: {
     status: "",
-    token: localStorage.getItem("x-auth-token") || "",
+    token: localStorage.getItem("Authorization") || "",
+    resendtoken: localStorage.getItem("X-token") || "",
     User: {},
     deleted_Acount: true,
   },
@@ -34,20 +35,24 @@ export default {
   },
   actions: {
     signUp({ commit }, user) {
+      console.log(user);
       commit("auth_request");
       axios
         .post("http://localhost:3000/sign-up", {
           email: user.email,
           password: user.password,
-          username: user.username,
+          userName: user.username,
           type: user.type,
           country: user.country,
         })
         .then((response) => {
           ///////////////////
+          console.log(response);
           const token = response.data.token;
-          localStorage.setItem("X-token", token);
-          console.log("token", token);
+          localStorage.setItem("Authorization", token);
+          axios.defaults.headers.common["Authorization"] = token;
+          store.dispatch("Authorization/get_user", true);
+          console.log(" sign up from token", token);
           ///////////////
         })
         .catch((error) => {
@@ -57,25 +62,28 @@ export default {
         });
     },
     get_user({ commit }, flag) {
-      const token = localStorage.getItem("x-auth-token");
-      axios.defaults.headers.common["x-auth-token"] = token;
+      const token = localStorage.getItem("Authorization");
+      console.log(token);
+      axios.defaults.headers.common["Authorization"] = token;
       commit("auth_request");
       axios
         .get("http://localhost:3000/me")
         .then((response) => {
-          const user = response.data[0];
+          console.log(response);
+          const user = response.data.user;
           commit("auth_success", { token, user });
           localStorage.setItem("is-manager", user.type);
           if (flag) router.replace("/");
         })
         .catch((error) => {
           commit("auth_error", "user_err");
-          localStorage.removeItem("x-auth-token");
+          localStorage.removeItem("Authorization");
           console.log(error);
         });
     },
     login({ commit }, user) {
-      console.log(localStorage);
+      console.log(localStorage,"hi iam in log in");
+      console.log(user);
       commit("auth_request");
       axios
         .post("http://localhost:3000/login", {
@@ -85,23 +93,23 @@ export default {
         })
         .then((response) => {
           const token = response.data.token;
-          localStorage.setItem("x-auth-token", token);
-          axios.defaults.headers.common["x-auth-token"] = token;
+          localStorage.setItem("Authorization", token);
+          axios.defaults.headers.common["Authorization"] = token;
           store.dispatch("Authorization/get_user", true);
         })
         .catch((error) => {
           console.log(error);
           commit("auth_error", "not user by this email");
-          localStorage.removeItem("x-auth-token");
+          localStorage.removeItem("Authorization");
         });
     },
     logout({ commit }) {
       commit("logout");
-      axios.post("/api/user/logout", {}).then(() => {
-        localStorage.removeItem("x-auth-token");
+        localStorage.removeItem("X-token");
+        localStorage.removeItem("Authorization");
         localStorage.removeItem("is-manager");
-        delete axios.defaults.headers.common["x-auth-token"];
-      });
+        delete axios.defaults.headers.common["Authorization"];
+        router.replace("/");
     },
     removeuser({ commit, state }) {
       axios

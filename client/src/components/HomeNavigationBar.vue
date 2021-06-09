@@ -1,31 +1,29 @@
-  
 <template>
   <div class="navbar-container justify-content-center">
-    <img src="../assets/logo.png" class="imgg" />
     <div class="navbar-list">
       <ul>
-        <router-link to="/Signup"  tag="li">
+        <router-link to="/Signup" v-if="isLoggedIn != 'success'" tag="li">
           <a> Sign up</a>
           <a> {{ isLoggedIn }}</a>
         </router-link>
-        <li id="separator">|</li>
         <router-link to="/Login" v-if="isLoggedIn != 'success'" tag="li">
           <a>Log In</a>
         </router-link>
         <router-link
-          to="/Manager"
+          :to="{ path: '/Manager/' + userid }"
           v-if="isLoggedIn == 'success' && usertype == 2"
           tag="li"
         >
           <a> My Home Page</a>
         </router-link>
         <router-link
-          to="/user"
+          :to="{ path: '/user/' + userid }"
           v-if="isLoggedIn == 'success' && usertype == 1"
           tag="li"
         >
           <a> My Home Page</a>
         </router-link>
+        <button v-if="isLoggedIn == 'success'" @click="logout" id="logout">Logout</button>
       </ul>
     </div>
   </div>
@@ -39,18 +37,19 @@ export default {
     ...mapGetters({
       isLoggedIn: "Authorization/GetStatus",
       usertype: "Authorization/usertype",
+      userid: "Authorization/userid",
     }),
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("Authorization/logout");
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.imgg {
-  width: 50px;
-  height: 50px;
-  float: left;
-}
 .navbar-container {
   width: 100%;
   margin: 0%;
@@ -90,5 +89,12 @@ a:hover {
   line-height: 1.5;
   position: fixed;
   margin: 0;
+}
+#logout
+{
+  background-color:rgb(96, 155, 189);
+  border-radius: 10px;
+  height: 50px;
+  margin-top: 20px;
 }
 </style>

@@ -34,7 +34,7 @@ const routes = [
     component: SearchResult,
   },
   {
-    path: "/Manager",
+    path: "/Manager/:mangerID",
     name: "Manager",
     component: Manager,
   },
@@ -52,7 +52,7 @@ const routes = [
     path: "/Book/:shipID",
     name: "Book",
     component: Book,
-  }
+  },
 ];
 
 const router = new VueRouter({
