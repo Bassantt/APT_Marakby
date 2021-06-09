@@ -51,6 +51,8 @@ export class ShipDto {
   numberOfHoursPerday?: Number;
   @IsOptional()
   offers?: [{ description: string, salary: Number }];
+  @IsOptional()
+  mangerId?: String;
 
 }
 

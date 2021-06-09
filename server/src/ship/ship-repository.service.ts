@@ -25,7 +25,8 @@ export class ShipRepository extends BaseRepository<Ship>  {
         return await this.update(_id, Data);
     }
 
-    async createShip(ShipData: ShipDto) {
+    async createShip(userID, ShipData: ShipDto) {
+        ShipData.mangerId = String(userID);
         return await this.create(ShipData);
     }
 

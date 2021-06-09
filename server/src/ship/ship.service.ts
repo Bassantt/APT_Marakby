@@ -17,8 +17,9 @@ export class ShipService {
         return ship;
     }
 
-    async createShip(createShipDto: ShipDto) {
-        return await this.ShipRepository.createShip(createShipDto);
+    async createShip(userID, createShipDto: ShipDto) {
+        createShipDto.mangerId = String(userID);
+        return await this.ShipRepository.createShip(userID, createShipDto);
     }
 
     async updateShip(updatedData, shipID) {

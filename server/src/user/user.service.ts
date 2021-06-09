@@ -30,10 +30,15 @@ export class UserService {
             throw new HttpException('"email" should not have acount', HttpStatus.FORBIDDEN,);
         const salt = await bcrypt.genSalt(10);
         let hash = await bcrypt.hash(createUserDto.password, salt);
+        createUserDto.mangerBooking = 0;
         createUserDto.password = hash;
         createUserDto.rate = 0;
+        createUserDto.unBooking = 0;
+        createUserDto.discond = 100;
         return await this.userRepository.createUser(createUserDto);
     }
+
+
 
     async findByLogin(loginDto: LoginDto) {
         const user = await this.userRepository.findByEmail(loginDto.email);
@@ -49,7 +54,6 @@ export class UserService {
     async findAllUsers(): Promise<User[] | null> {
         return await this.userRepository.findAll();
     }
-
 
 
     async deleteUser(userID) {
@@ -77,6 +81,12 @@ export class UserService {
             throw new HttpException('you dont have this ship', HttpStatus.UNAUTHORIZED);
         else
             return user;
+    }
+
+    async checkAdmin(userID) {
+        const user = await this.getUserByID(userID);
+        if (!user || user.type != 3)
+            throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
     }
 
     async getUserShips(userID) {
@@ -109,9 +119,22 @@ export class UserService {
         if (bookings || bookings != [])
             for (let i = 0; i < bookings.length; i++) {
                 await this.userRepository.deleteValueFrommAllShips({ 'bookings': bookings[i] });
-                await this.bookingsRepository.deleteBookings(bookings[i]);
+                await this.deleteBookShip(userID, bookings[i]);
             }
         return await this.userRepository.update(userID, { ownShips: user.ownShips });
+    }
+
+    async getUSerWithHeighBookings() {
+        return await this.userRepository.getUsersByArrange({}, '-rate');
+    }
+
+    async getUSerWithHeighunBookings() {
+        return await this.userRepository.getUsersByArrange({}, '-unBooking');
+    }
+
+
+    async getUSerWithHeighManger() {
+        return await this.userRepository.getUsersByArrange({ type: 2 }, '-mangerBooking');
     }
 
     async updateMe(userId, updatedData) {
@@ -120,7 +143,7 @@ export class UserService {
 
     async createShip(userID, ship: ShipDto) {
         const user = await this.checkUserIsManager(userID);
-        const shipCreated = await this.shipRepository.createShip(ship)
+        const shipCreated = await this.shipRepository.createShip(userID, ship);
         if (!shipCreated)
             throw new HttpException('can not add ship', HttpStatus.BAD_REQUEST);
         await this.addShipToManager(user, shipCreated._id)
@@ -133,8 +156,10 @@ export class UserService {
         var index = -2;
         if (!ship.blockDates || ship.blockDates == []) ship.blockDates = {};
         if (ship.blockDates[bookingData.bookDate]) {
-            index = ship.blockDates[bookingData.bookDate].findIndex(range => Number(range.from) >= Number(bookingData.fromHour) && Number(range.to) <= Number(bookingData.endHour))
-            if (!(index >= 0))
+            index = ship.blockDates[bookingData.bookDate].findIndex(range => Number(range.from) <= Number(bookingData.fromHour) && Number(range.to) >= Number(bookingData.endHour))
+            console.log(index);
+            console.log(ship.blockDates[bookingData.bookDate]);
+            if (index == -1)
                 throw new HttpException('this time ship is not available', HttpStatus.BAD_REQUEST);
         }
         const booking = await this.bookingsRepository.createBookings(bookingData);
@@ -143,6 +168,7 @@ export class UserService {
         await this.userRepository.updateArrayDataInUser(userId, { interstedShips: shipId });
         await this.shipRepository.addBooking(shipId, booking._id);
         await this.userRepository.updateUserData(userId, { $inc: { rate: 1 } });
+        await this.userRepository.updateUserData(ship.mangerId, { $inc: { mangerBooking: 1 } });
         if (index >= 0) {
             const currentRang = ship.blockDates[bookingData.bookDate][index];
             ship.blockDates[bookingData.bookDate].splice(index, 1);
@@ -186,14 +212,21 @@ export class UserService {
         var index = -2;
         if (!user.bookings && user.bookings == [])
             throw new HttpException('this booking is not belogs to you', HttpStatus.BAD_REQUEST);
-        index = user.bookings.findIndex(booking => String(booking) == String(bookingId));
+        index = user.bookings.findIndex(booking1 => String(booking1) == String(bookingId));
         const shipId = user.interstedShips[index];
-        await this.userRepository.deleteValueFrommAllShips({ 'bookings': bookingId });
-        await this.shipRepository.deleteValueFrommAllShips({ 'bookings': bookingId });
-        await this.userRepository.deleteValueFrommAllShips({ 'interstedShips': user.interstedShips[index] });
-        await this.userRepository.updateUserData(userId, { $dec: { rate: 1 } });
         const ship = await this.shipRepository.findByID(String(shipId));
-        ship.blockDates[booking.bookDate].push({ from: booking.fromHour, to: booking.endHour });
+        user.bookings.splice(index, 1);
+        await this.userRepository.update(userId, { bookings: user.bookings });
+        ship.bookings.splice(ship.bookings.findIndex(o => o == bookingId), 1);
+        await this.shipRepository.update(shipId, { bookings: ship.bookings });
+        user.interstedShips.splice(index, 1);
+        await this.userRepository.update(userId, { interstedShips: user.interstedShips });
+        await this.userRepository.updateUserData(userId, { $inc: { rate: -1 } });
+        await this.userRepository.updateUserData(userId, { $inc: { unBooking: 1 } });
+
+        await this.userRepository.updateUserData(ship.mangerId, { $inc: { mangerBooking: -1 } });
+        if (booking)
+            ship.blockDates[booking.bookDate].push({ from: booking.fromHour, to: booking.endHour });
         await this.shipRepository.updateShipData(String(shipId), { blockDates: ship.blockDates });
         await this.bookingsRepository.deleteBookings(bookingId);
     }

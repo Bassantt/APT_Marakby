@@ -37,6 +37,18 @@ export class User {
   @IsNumber()
   @prop({ default: 0 })
   rate?: number;
+  @prop({ options: true })
+  @IsNumber()
+  @prop({ default: 0 })
+  unBooking?: number;
+  @prop({ options: true })
+  @IsNumber()
+  @prop({ default: 100 })
+  discond?: number;
+  @prop({ options: true })
+  @IsNumber()
+  @prop({ default: 0 })
+  mangerBooking?: number;
   @prop({ ref: Ship })
   interstedShips?: [Ref<Ship>];
   @prop({ ref: User })

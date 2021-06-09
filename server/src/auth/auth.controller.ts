@@ -33,7 +33,6 @@ export class AuthController {
         return { token, user };
     }
 
-    // should takeToken not body param
     @UseGuards(AuthGuard('jwt'))
     @Delete('/me/delete')
     async delete(@Request() req) {

@@ -76,4 +76,7 @@ export class Ship {
   offers?: [{ description: string, salary: Number }];
   @prop({ ref: Bookings })
   bookings?: [Ref<Bookings>];
+  @IsOptional()
+  @prop({ options: true })
+  mangerId?: String;
 }

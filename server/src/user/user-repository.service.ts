@@ -42,7 +42,8 @@ export class UserRepository extends BaseRepository<User>  {
     async deleteValueFrommAllShips(Data) {
         return await this.updateAllWith({ $pull: Data });
     }
-    //const playlists = await playlistDocument.find({ isPublic: true }).sort('-popularity').limit(20);
-
-
+    async getUsersByArrange(selector, sortKey) {
+        //'-popularity'
+        return await this._userModel.find(selector).sort(sortKey).limit(20);
+    }
 }

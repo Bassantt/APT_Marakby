@@ -19,4 +19,10 @@ export class RegisterDto {
   country: string;
   @IsOptional()
   rate?: number;
+  @IsOptional()
+  unBooking?: number;
+  @IsOptional()
+  discond?: number;
+  @IsOptional()
+  mangerBooking?: number;
 }
