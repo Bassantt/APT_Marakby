@@ -4,11 +4,11 @@
       <h4 class="card-title" id="Shipname">{{ Shipname }}</h4>
       <div @click="setShipId">
         <router-link
-          :to="{ path: 'Ship/' + ShipId + '/' + Shipname }"
+          :to="{ path: 'Shipview/' + ShipId }"
           class="stretched-link"
           id="carglink"
           testid="cardlink"
-        ></router-link>
+        ></router-link>        
       </div>
     </div>
     <img

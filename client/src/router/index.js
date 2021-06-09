@@ -6,6 +6,10 @@ import Login from "../views/Login.vue";
 import Admin from "../views/Admin.vue";
 import Manager from "../views/Manager.vue";
 import SearchResult from "../views/SearchResult.vue";
+import Signup from "../views/Signup.vue";
+import Shipview from "../views/Shipview.vue";
+import Book from "../views/Book.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -34,6 +38,21 @@ const routes = [
     name: "Manager",
     component: Manager,
   },
+  {
+    path: "/Signup",
+    name: "Signup",
+    component: Signup,
+  },
+  {
+    path: "/Shipview/:shipID",
+    name: "Shipview",
+    component: Shipview,
+  },
+  {
+    path: "/Book/:shipID",
+    name: "Book",
+    component: Book,
+  }
 ];
 
 const router = new VueRouter({

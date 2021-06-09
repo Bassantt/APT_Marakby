@@ -1,9 +1,10 @@
+  
 <template>
   <div class="navbar-container justify-content-center">
     <img src="../assets/logo.png" class="imgg" />
     <div class="navbar-list">
       <ul>
-        <router-link to="/" v-if="isLoggedIn != 'success'" tag="li">
+        <router-link to="/Signup"  tag="li">
           <a> Sign up</a>
           <a> {{ isLoggedIn }}</a>
         </router-link>

@@ -41,7 +41,6 @@ export default {
           password: user.password,
           username: user.username,
           type: user.type,
-          Phone: user.Phone,
           country: user.country,
         })
         .then((response) => {
