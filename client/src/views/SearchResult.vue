@@ -2,40 +2,34 @@
   <div>
     <div class="navbar-list">
       <ul style="list-style-type: none">
-        <router-link to="/" v-if="isLoggedIn != 'success'" tag="li">
+        <router-link to="/" tag="li">
           <a>Back TO Home</a>
         </router-link>
       </ul>
     </div>
     <div class="Brows-container">
       <div class="row">
-        {{this.$route.params.searchwith}}
+        {{ this.$route.params.searchwith }}
         <h1>The result for search is {{ this.$route.params.Searchvalue }}</h1>
         <h2 v-if="true">Ships</h2>
       </div>
-      <div class="row">
+      <div class="row" v-if="Ships != []">
         <!-- when back intgrate -->
-        <!-- <ShipCard
-                class="col-lg-10% col-md-60% col-xs-6"
-                v-for=" Ship in Ships"
-                :key="Ship.id"
-                :image="Ship.images[0]._id"
-                :name="Ship.name"
-                :ShipId="Ship._id"
-                /> -->
-        <!-- just for test -->
         <ShipCard
           class="col-lg-10% col-md-60% col-xs-6"
-          :key="'1'"
-          :Shipname="this.$route.params.Searchvalue"
-          :ShipId="'1'"
+          v-for="Ship in Ships"
+          :key="Ship._id"
+          :name="Ship.name"
+          :ShipId="Ship._id"
         />
       </div>
+      <div class="row" v-if="Ships != []">no Srearch Result</div>
     </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
 import ShipCard from "@/components/ShipCard.vue";
 import { mapGetters } from "vuex";
 
@@ -50,7 +44,11 @@ export default {
     }),
   },
   created: function () {
-    this.$store.dispatch("Ship/SearchShip", this.$route.params.Searchvalue,this.$route.params.searchwith);
+    this.$store.dispatch(
+      "Ship/SearchShip",
+      this.$route.params.Searchvalue,
+      this.$route.params.searchwith
+    );
   },
 };
 </script>

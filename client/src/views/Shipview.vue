@@ -110,6 +110,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { mapGetters } from "vuex";
 export default {
   name: "Shipview",
@@ -127,7 +128,7 @@ export default {
   },
   created: function () {
     this.ship_id = this.$route.params.ship_id;
-    this.$store.dispatch("shipview/ship", this.$route.params.ship_id);
+    this.$store.dispatch("shipview/ship", this.$route.params.shipID);
   },
 };
 </script>

@@ -27,7 +27,7 @@ export default {
       type: String,
     },
     Ship_Price: {
-      type: String,
+      type: Number,
     },
   },
   methods: {

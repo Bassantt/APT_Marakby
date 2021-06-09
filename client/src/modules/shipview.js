@@ -41,12 +41,11 @@ export default {
     ship({ commit }, ship_id) {
       console.log(ship_id);
       axios
-        .get("http://localhost:3000/ships/60bf9ce3a654e70e24c5d5c8")
+        .get("http://localhost:3000/ships/" + ship_id)
         .then((response) => {
           console.log(response.data);
           let ship = response.data;
           commit("set_ship_name", ship.name);
-          //     commit("set_ship_image", ship.ship_image);
           commit("set_ship_id", ship._id);
           commit("set_ship_description", ship.description);
           commit("set_ship_blockDate", ship.blockDates);

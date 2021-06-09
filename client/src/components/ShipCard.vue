@@ -1,14 +1,14 @@
 <template>
   <div class="card rounded col-lg-20%">
     <div class="card-img-overlay">
-      <h4 class="card-title" id="Shipname">{{ Shipname }}</h4>
+      <h4 class="card-title" id="Shipname">{{ name }}</h4>
       <div @click="setShipId">
         <router-link
-          :to="{ path: 'Shipview/' + ShipId }"
+          :to="{ path: '/Shipview/' + ShipId }"
           class="stretched-link"
           id="carglink"
           testid="cardlink"
-        ></router-link>        
+        ></router-link>
       </div>
     </div>
     <img
@@ -56,7 +56,7 @@ export default {
     // image: {
     //   type: String
     // },
-    Shipname: {
+    name: {
       type: String,
     },
     ShipId: {
