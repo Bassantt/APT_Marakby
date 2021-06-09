@@ -9,6 +9,7 @@ export default {
     resendtoken: localStorage.getItem("X-token") || "",
     User: {},
     deleted_Acount: true,
+    msg:""
   },
   mutations: {
     auth_request(state) {
@@ -31,6 +32,9 @@ export default {
       state.status = "";
       state.token = "";
       state.User = {};
+    },
+    is_edit(state, msg) {
+      state.isEdited = msg;
     },
   },
   actions: {
@@ -125,6 +129,37 @@ export default {
           if (error.response.status != 400) {
             state.deleted_Acount = false;
           }
+        });
+    },
+    ////////////////////////////
+    saveEdit({ commit }, user) {
+      console.log(user);
+      const token = localStorage.getItem("Authorization");
+      console.log(token);
+      axios.defaults.headers.common["Authorization"] =  token;
+      commit("auth_request");
+      axios
+        .put("http://localhost:3000/me/", {
+          user
+        })
+        .then((response) => {
+          console.log(response);
+          commit("is_edit", "success");
+          router.replace("/");
+        })
+        .catch(error => {
+          if (
+            error.response.data.error.details[0].message ==
+            '"cardNumber" must be a credit card'
+          )
+            commit("is_edit", "carderror");
+          else if (
+            error.response.data.error.details[0].message.includes(
+              '"expiresDate" must be larger than or equal to'
+            )
+          )
+            commit("is_edit", "dateerror");
+          else commit("is_edit", "faild");
         });
     },
   },

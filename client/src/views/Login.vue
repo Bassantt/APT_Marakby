@@ -32,6 +32,7 @@
         <select v-model="type" id="type">
           <option value="1" selected>user</option>
           <option value="2">manager</option>
+          <option value="3" selected>admin</option>
         </select>
         <div id="wrap">
           <button

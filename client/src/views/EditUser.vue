@@ -1,6 +1,6 @@
 <template>
 <div id="editUser" v-on:submit.prevent="submit">
-
+    <HomeNavigation/>
     <div class="container">
         <h3>Edit Your Data Here:</h3>
   <form action="action_page.php">
@@ -9,7 +9,8 @@
         <label for="name">Name</label>
       </div>
       <div class="col-75">
-        <input type="text" v-model="inputName" id="name" name="name" placeholder="Your name..">
+        <h4>{{user.userName}}</h4>
+        <input type="text" v-model="inputName" id="name" name="name" placeholder="edit name">
       </div>
     </div>
     <div class="row">
@@ -17,7 +18,7 @@
         <label for="Phone">Phone</label>
       </div>
       <div class="col-75">
-        <input type="text" v-model="inputPhone" id="Phone" name="Phone" placeholder="Your Phone number..">
+        <input type="text" v-model="inputPhone" id="Phone" name="Phone" placeholder=" Add Your Phone number..">
       </div>
     </div>
     <div class="row">
@@ -25,8 +26,8 @@
         <label for="country">Country</label>
       </div>
       <div class="col-75">
-       
-        <input type="text" v-model="inputCountry" id="Country" name="Country" placeholder="Country ..">
+        <h4>{{user.country}}</h4>
+        <input type="text" v-model="inputCountry" id="Country" name="Country" placeholder="Edite value">
       </div>
     </div>
 
@@ -35,7 +36,7 @@
         <label for="oldpass">Credit Card</label>
       </div>
       <div class="col-75">
-        <input type="text" v-model="CreditCard" id="CreditCard" name="CreditCard" placeholder="Credit Card ..">
+        <input type="text" v-model="CreditCard" id="CreditCard" name="CreditCard" placeholder=" Add Credit Card ..">
       </div>
     </div>
     <div class="row">
@@ -48,9 +49,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import HomeNavigation from "@/components/HomeNavigationBar.vue";
 export default {
    name: "EditUser",
-
+     components: {
+    HomeNavigation,
+  },
     data() {
     return {
         inputName: "",
@@ -60,49 +65,14 @@ export default {
 
     }},
 
-    props:
-    {
-        Profile:{
-        Name:{type:String,},
-        Country:{type:String,},
-        Password:{type:String,},
-        Img:{type:String,}},
-        Phone:{type:String}
-    },
+   computed: {
+    ...mapGetters({
+      user: "Authorization/user"
+    }),
+  },
     methods:
     {
-/*    EditValues()
-        
-        {
 
-        if ( (this.inputOldPassword == this.Profile.Password) || ( (this.inputOldPassword=="")&&(this.inputNewPassword=="")))
-            {
-                if (this.inputName=="") this.inputName=this.Name;
-                if (this.inputEmail=="") this.inputEmail=this.Email;
-                if (this.inputNewPassword=="") this.inputNewPassword=this.Email;
-                if (this.inputCountry=="") this.inputCountry=this.Country;
-                if (this.inputPhone=="") this.inputPhone=this.Phone;
-
-                const UpdatedProfile =
-                {
-                     Name:this.inputName,
-                     Email:this.inputEmail,
-                     Country:this.inputCountry,
-                     Password:this.inputNewPassword,
-                     Img:"",
-                     Phone:this.inputPhone
-                }
-                
-                this.$emit("EditValues",UpdatedProfile);
-
-            }
-
-            
-        
-        else
-        alert("Wrong Password");
-        },
-*/
       EditValues() {
       setTimeout(() => {
         let edituser = {
@@ -111,9 +81,9 @@ export default {
           country: this.inputCountry,
           CreditCard: this.CreditCard,
         };
+        console.log(edituser);
         this.saved = "1";
         this.$store.dispatch("Authorization/saveEdit", edituser);
-        this.$router.replace("/Login");
       }, 200);
     },
 

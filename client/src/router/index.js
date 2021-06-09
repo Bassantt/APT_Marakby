@@ -9,6 +9,7 @@ import SearchResult from "../views/SearchResult.vue";
 import Signup from "../views/Signup.vue";
 import Shipview from "../views/Shipview.vue";
 import Book from "../views/Book.vue";
+import EditUser from "../views/EditUser.vue";
 
 Vue.use(VueRouter);
 
@@ -24,7 +25,7 @@ const routes = [
     component: Login,
   },
   {
-    path: "/Admin",
+    path: "/Admin/:AdminID",
     name: "Admin",
     component: Admin,
   },
@@ -37,6 +38,11 @@ const routes = [
     path: "/Manager/:mangerID",
     name: "Manager",
     component: Manager,
+  },
+  {
+    path: "/EditUser/:EditUserID",
+    name: "EditUserr",
+    component: EditUser,
   },
   {
     path: "/Signup",

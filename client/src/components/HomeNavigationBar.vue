@@ -17,8 +17,15 @@
           <a> My Home Page</a>
         </router-link>
         <router-link
-          :to="{ path: '/user/' + userid }"
+          :to="{ path: '/EditUser/' + userid }"
           v-if="isLoggedIn == 'success' && usertype == 1"
+          tag="li"
+        >
+          <a> My Home Page</a>
+        </router-link>
+                <router-link
+          :to="{ path: '/Admin/' + userid }"
+          v-if="isLoggedIn == 'success' && usertype == 3"
           tag="li"
         >
           <a> My Home Page</a>
