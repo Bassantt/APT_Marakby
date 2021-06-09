@@ -63,16 +63,6 @@
     <h2>{{ ShipsData.swingSalary }}</h2>
     Do you want :
     <input type="checkbox" id="checkdeaths" v-model="swingSalary" />
-    <!-- <h2> you discond is {{ getuser_discount }}</h2> -->
-    <!-- <button
-      v-if="totalsalary == 0"
-      type="button"
-      class="search"
-      id="searchbutton"
-      @click="getsalary"
-    >
-      Get Total Salary With discond
-    </button> -->
     <h3 >Salary is {{ totalsalary }}</h3>
     <button type="button" class="btn" id="searchbutton" @click="submit">
       submit

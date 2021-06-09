@@ -85,7 +85,7 @@
               </div>
               <div class="col-6 form-group text-center">
                 <router-link to="/Login" v-if="isLoggedIn != 'success'" tag="li">
-                <a>Please Login First To can Book</a>
+                <p>Login First To can Book</p>
                 </router-link>
                 <router-link
                   v-if="isLoggedIn == 'success'"
@@ -130,6 +130,10 @@ export default {
 </script>
 
 <style scoped>
+.p{
+  font-size: 200px;
+  color: white;
+}
 .shapeview {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
