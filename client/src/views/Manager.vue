@@ -7,16 +7,15 @@
         <AddShip />
       </div>
     </div>
-    <div class="row">
+    <div class="row" id="margn">
       <h1>YOUR SHIPS</h1>
       <ShipItem
         class="col-lg-100% col-md-60% col-xs-6"
-        v-for="Ship in ships"
-        :key="Ship.id"
-        :Ship_Id="Ship.id"
-        :Ship_Name="Ship.Name"
-        :Ship_Price="Ship.Price"
-        :ship_img="Ship.ImageSrc"
+        v-for="Ship in Ships"
+        :key="Ship._id"
+        :Ship_Id="Ship._id"
+        :Ship_Name="Ship.name"
+        :Ship_Price="Ship.salaryPerHour"
       />
     </div>
   </div>
@@ -34,60 +33,12 @@ export default {
     ShipItem,
     HomeNavigation,
   },
-  data() {
-    return {
-      ships: [
-        {
-          id: "1",
-          Name: "Normandy",
-          Loc: "mazarita",
-          ImageSrc: "../assets/ship4.jpg",
-          Price: "1500",
-          Description: "This is a very good ship",
-          Rate: "5.0",
-          Available: true,
-        },
-
-        {
-          id: "2",
-          Name: "amirelb7ar",
-          Loc: "kotmoto",
-          ImageSrc: "../assets/ship5.jpg",
-          Price: "500",
-          Description: "This is a very bad ship",
-          Rate: "5.0",
-          Available: true,
-        },
-        {
-          id: "3",
-          Name: "Normandy",
-          Loc: "mazarita",
-          ImageSrc: "../assets/ship4.jpg",
-          Price: "1500",
-          Description: "This is a very good ship",
-          Rate: "5.0",
-          Available: true,
-        },
-
-        {
-          id: "4",
-          Name: "amirelb7ar",
-          Loc: "kotmoto",
-          ImageSrc: "../assets/ship5.jpg",
-          Price: "500",
-          Description: "This is a very bad ship",
-          Rate: "5.0",
-          Available: true,
-        },
-      ],
-    };
-  },
   created: function () {
     this.$store.dispatch("Ship/showmanagerShips");
   },
   computed: {
     ...mapGetters({
-      Ships: "Ship/getmanagerShips",
+      Ships: "Ship/getmanagerShips"
     }),
   },
   methods: {
@@ -100,11 +51,16 @@ export default {
 </script>
 
 <style scoped>
+#margn
+{
+  margin-top: 1300px;
+  background-color: rgba(158, 185, 185, 0.596);
+}
 #nav {
   z-index: 0;
 }
 .row {
-  margin-top: 1000px;
+  margin-top: 900px;
 }
 .cont {
   height: calc(200vh);

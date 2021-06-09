@@ -8,8 +8,12 @@ export default {
     ShipsData: [],
     ShipsOutFromSearch: [],
     managerShips: [],
+    done:false
   },
   mutations: {
+    done(state, done) {
+      state.done = done;
+    },
     setShips(state, resShips) {
       state.Ships = resShips;
     },
@@ -29,9 +33,10 @@ export default {
   actions: {
     showfreqShips({ commit }) {
       axios
-        .get("/api/browse/Ships/")
+        .get("http://localhost:3000/ships")
         .then((respons) => {
-          let resShips = respons.data.Ships;
+          console.log(respons);
+          let resShips = respons.data;
           commit("setShips", resShips);
         })
         .catch((error) => {
@@ -42,25 +47,17 @@ export default {
     setShip({ commit }, ShipId) {
       commit("set_Ship", ShipId);
     },
-    ////////////////////////////////////////
-    getShipInfo({ commit }, ShipId) {
-      axios
-        .get("/api/browse/Ship/" + ShipId)
-        .then((respons) => {
-          let resShipsData = respons.data.playlists;
-          commit("setShipsData", resShipsData);
-        })
-        .catch((error) => {
-          commit("setShipsData", []);
-          console.log(error);
-        });
-    },
     //////////////////search for ship with name////////////////////////
     SearchShip({ commit }, searchvalue,searchwith) {
+      var searchByCountry=false;
+      if(searchwith=="2")
+      {
+        searchByCountry=true;
+      }
       axios
-        .get("/api/search/Ships?value=" + searchvalue+"with="+searchwith)
+        .get("http://localhost:3000/search/ships?name="+searchvalue+"&searchByCountry="+searchByCountry)
         .then((respons) => {
-          let resultShips = respons.data.Ships;
+          let resultShips = respons.data;
           commit("setShipsOutFromSearch", resultShips);
         })
         .catch((error) => {
@@ -70,10 +67,14 @@ export default {
 
     //////////////////showmanagerShips////////////////////////
     showmanagerShips({ commit }) {
+      const token = localStorage.getItem("Authorization");
+      console.log(token);
+      axios.defaults.headers.common["Authorization"] = token;
       axios
         .get("http://localhost:3000/me/ships")
         .then((respons) => {
-          let resultShips = respons.data.Ships;
+          console.log(respons);
+          let resultShips = respons.data.ships_data;
           commit("setmanagerShips", resultShips);
         })
         .catch((error) => {
@@ -81,8 +82,11 @@ export default {
         });
     },
     ////////////////////////////////////
-    addmanagerShip(newship) {
+    addmanagerShip({ commit },newship) {
       console.log(newship);
+      const token = localStorage.getItem("Authorization");
+      console.log(token);
+      axios.defaults.headers.common["Authorization"] = token;
       axios
         .post("http://localhost:3000/me/ships", {
           name: newship.name,
@@ -92,16 +96,28 @@ export default {
           location: newship.location,
           country: newship.country,
           capcity: newship.capcity,
-          availableFunctions: [],
+          partySalary: newship.partySalary,
+          soundSalary: newship.soundSalary,
+          lightSalary: newship.lightSalary,
+          foodPartySalary: newship.foodPartySalary,
+          decorationSalary: newship.decorationSalary,
+          meetingSalary: newship.meetingSalary,
+          hallSalary: newship.hallSalary,
+          foodMeetingSalary: newship.foodMeetingSalary,
+          travelSalary: newship.travelSalary,
+          roomSalary: newship.roomSalary,
+          foodTravelSalary: newship.foodTravelSalary,
+          swingSalary: newship.swingSalary,
           numberOfHoursPerday: newship.numberOfHoursPerday,
           offers: [],
         })
         .then((respons) => {
+          commit("done",true)
           console.log(respons);
           store.dispatch("Ship/showmanagerShips");
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error,"hiii");
         });
     },
     //////////////////////////////////

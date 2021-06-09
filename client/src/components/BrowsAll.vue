@@ -10,20 +10,12 @@
     <h2 v-if="true">Ships</h2>
     <div class="row">
       <!-- when back intgrate -->
-      <!-- <ShipCard
-              class="col-lg-10% col-md-60% col-xs-6"
-              v-for=" Ship in Ships"
-              :key="Ship.id"
-              :image="Ship.images[0]._id"
-              :name="Ship.name"
-              :ShipId="Ship._id"
-            /> -->
-      <!-- just for test -->
       <ShipCard
         class="col-lg-10% col-md-60% col-xs-6"
-        :key="'1'"
-        :Shipname="'Marakby'"
-        :ShipId="'1'"
+        v-for="Ship in Ships"
+        :key="Ship._id"
+        :name="Ship.name"
+        :ShipId="Ship._id"
       />
     </div>
   </div>

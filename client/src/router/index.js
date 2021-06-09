@@ -65,7 +65,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   console.log(store.getters["Authorization/GetStatus"]);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    var status = localStorage.getItem("x-auth-token");
+    var status = localStorage.getItem("Authorization");
     if (!status) {
       next("/UnAuthorized");
       return;
@@ -73,15 +73,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-  if (to.matched.some((record) => record.meta.toPremium)) {
-    if (store.getters["Authorization/GetStatus"] != "success") {
-      next("/login");
-      return;
-    }
-  } else {
-    next();
-  }
-
   if (to.matched.some((record) => record.meta.toArtist)) {
     if (store.getters["Authorization/GetStatus"] != "success") {
       next("/login");
@@ -90,10 +81,10 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-  if (to.matched.some((record) => record.meta.isArtist)) {
-    status = localStorage.getItem("x-auth-token");
-    var isArtist = localStorage.getItem("is-artist");
-    if (!status || isArtist != "Artist") {
+  if (to.matched.some((record) => record.meta.ismanager)) {
+    status = localStorage.getItem("Authorization");
+    var ismanager = localStorage.getItem("is-manager");
+    if (!status || ismanager != "manager") {
       next("/UnAuthorized");
       return;
     }
@@ -103,14 +94,6 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.isLogged)) {
     if (store.getters["Authorization/GetStatus"] == "success") {
       next("/");
-      return;
-    }
-  } else {
-    next();
-  }
-  if (to.matched.some((record) => record.meta.isPremium)) {
-    if (store.getters["Authorization/user"].product == "premium") {
-      next(from.path);
       return;
     }
   } else {
