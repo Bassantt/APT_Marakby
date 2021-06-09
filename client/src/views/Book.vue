@@ -130,7 +130,7 @@ export default {
       }
        else
       {
-        this.totalsalary -= his.ShipsData.foodPartySalary;
+        this.totalsalary -= this.ShipsData.foodPartySalary;
       }
     },
     decorationSalary:function(){

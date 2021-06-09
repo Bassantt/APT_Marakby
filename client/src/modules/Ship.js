@@ -9,7 +9,8 @@ export default {
     ShipsOutFromSearch: [],
     managerShips: [],
     done:false,
-    add:false
+    add:false,
+    delete:false
   },
   mutations: {
     done(state, done) {
@@ -17,6 +18,9 @@ export default {
     },
     add(state, add) {
       state.add = add;
+    },
+    delete(state, bol) {
+      state.done = bol;
     },
     setShips(state, resShips) {
       state.Ships = resShips;
@@ -121,18 +125,25 @@ export default {
           store.dispatch("Ship/showmanagerShips");
         })
         .catch((error) => {
+          commit("add",true);
           console.log(error,"hiii");
         });
     },
     //////////////////////////////////
-    deletemanagerShip(ship_id) {
+    deletemanagerShip({commit},shipid) {
+      const token = localStorage.getItem("Authorization");
+      console.log(token);
+      console.log(shipid);
+      axios.defaults.headers.common["Authorization"] = token;
       axios
-        .delete("http://localhost:3000/me/ships/" + ship_id)
+        .delete("http://localhost:3000/me/ships/" + shipid)
         .then((respons) => {
+          commit("delete",true)
           console.log(respons);
           store.dispatch("Ship/showmanagerShips");
         })
         .catch((error) => {
+          commit("delete",false)
           console.log(error);
         });
     },
