@@ -16,7 +16,7 @@
         :key="Ship._id"
         :name="Ship.name"
         :ShipId="Ship._id"
-      />
+        :country="Ship.country"  />
     </div>
   </div>
 </template>

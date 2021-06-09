@@ -45,7 +45,7 @@
         </div>
         <h4>{{ isLoggedIn }}</h4>
         <h2>Don't have an account?</h2>
-        <router-link class="costum-btn" id="signup_btn" to="/" tag="button">
+        <router-link class="costum-btn" id="signup_btn" to="/Signup" tag="button">
           SIGN up
         </router-link>
       </form>

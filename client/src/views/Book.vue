@@ -1,5 +1,6 @@
 <template>
   <div id="book">
+    <HomeNavigation/>
     <h1>Reservation Details</h1>
     <h1>You can choose what you want from Features: and know the Salary</h1>
 
@@ -67,15 +68,19 @@
     <button type="button" class="btn" id="searchbutton" @click="submit">
       submit
     </button>
-    <h4 v-if="done">Book done</h4>
-    <h4 v-if="!done">Sory this is already booked try another</h4>
+    <h4 v-if="done==true">Book done</h4>
+    <h4 v-if="done==false">Sory this is already booked try another</h4>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import HomeNavigation from "@/components/HomeNavigationBar.vue";
 export default {
   name: "Book",
+    components: {
+    HomeNavigation,
+  },
   data() {
     return {
       date: "",
@@ -101,36 +106,20 @@ export default {
       if (this.partySalar == true) {
         this.totalsalary += this.ShipsData.partySalary;
       }
-      else
-      {
-        this.totalsalary -= this.ShipsData.partySalary;
-      }
     },
     soundSalary:function(){
       if (this.soundSalary == true) {
         this.totalsalary += this.ShipsData.soundSalary;
-      }
-       else
-      {
-        this.totalsalary -= this.ShipsData.soundSalary;
       }
     } ,
     lightSalary:function(){
       if (this.lightSalary == true) {
         this.totalsalary += this.ShipsData.lightSalary;
       }
-       else
-      {
-        this.totalsalary -= this.ShipsData.lightSalary;
-      }
     },
     foodPartySalary:function(){
       if (this.foodPartySalary == true) {
         this.totalsalary += this.ShipsData.foodPartySalary;
-      }
-       else
-      {
-        this.totalsalary -= this.ShipsData.foodPartySalary;
       }
     },
     decorationSalary:function(){
@@ -155,45 +144,27 @@ export default {
       if (this.foodMeetingSalary == true) {
         this.totalsalary += this.ShipsData.foodMeetingSalary;
       }
-       else
-      {
-        this.totalsalary -= this.ShipsData.foodMeetingSalary;
-      }
     },
     travelSalary:function(){
       if (this.travelSalary == true) {
         this.totalsalary += this.ShipsData.travelSalary;
       }
-       else
-      {
-        this.totalsalary -= this.ShipsData.travelSalary;
-      }
+
     },
     roomSalary:function(){
       if (this.roomSalary == true) {
         this.totalsalary += this.ShipsData.roomSalary;
       }
-       else
-      {
-        this.totalsalary -= this.ShipsData.roomSalary;
-      }
+
     },
     foodTravelSalary:function(){
       if (this.foodTravelSalary == true) {
         this.totalsalary += this.ShipsData.foodTravelSalary;
       }
-       else
-      {
-        this.totalsalary -= this.ShipsData.foodTravelSalary;
-      }
     },
       swingSalary:function(){
       if (this.swingSalary == true) {
         this.totalsalary += this.ShipsData.swingSalary;
-      }
-       else
-      {
-        this.totalsalary -= this.ShipsData.swingSalary;
       }
       },
     

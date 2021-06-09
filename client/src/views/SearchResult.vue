@@ -21,9 +21,9 @@
           :key="Ship._id"
           :name="Ship.name"
           :ShipId="Ship._id"
+          :country="Ship.country"
         />
       </div>
-      <div class="row" v-if="Ships != []"><h1>no Srearch Result</h1></div>
     </div>
   </div>
 </template>

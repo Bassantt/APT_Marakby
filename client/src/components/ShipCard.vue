@@ -2,6 +2,7 @@
   <div class="card rounded col-lg-20%">
     <div class="card-img-overlay">
       <h4 class="card-title" id="Shipname">{{ name }}</h4>
+      <h4 class="card-title" id="Shipname">{{ country }}</h4>
       <div @click="setShipId">
         <router-link
           :to="{ path: '/Shipview/' + ShipId }"
@@ -53,9 +54,9 @@ h4 {
 export default {
   name: "ShipCard",
   props: {
-    // image: {
-    //   type: String
-    // },
+    country: {
+      type: String
+    },
     name: {
       type: String,
     },

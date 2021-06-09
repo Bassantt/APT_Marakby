@@ -84,9 +84,14 @@
                 </label>
               </div>
               <div class="col-6 form-group text-center">
-                <router-link to="/Login" v-if="isLoggedIn != 'success'" tag="li">
-                <p>Login First To can Book</p>
-                </router-link>
+                <router-link
+                  v-if="isLoggedIn != 'success'"
+                  to="/Login"
+                  class="btn-vue1 form-control form-control-lg col-2"
+                  id="carglink"
+                  testid="cardlink"
+                  >Login First To can Book</router-link
+                >
                 <router-link
                   v-if="isLoggedIn == 'success'"
                   :to="{ path: '/Book/' + this.$route.params.shipID }"
