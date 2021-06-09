@@ -54,9 +54,12 @@ export class ShipController {
     @UseGuards(AuthGuard('jwt'))
     @Delete('/me/ships/:_id')
     async deleteShip(@Param('_id') ShipId: string, @Request() req) {
+        console.log("control zero point")
         await this.userService.checkOwner(req.user._id, ShipId);
-        await this.shipService.deleteShip(ShipId);
-        await this.userService.deleteShip(req.user._id, ShipId);
+        console.log("control first point")
+        const bookings = await this.shipService.deleteShip(ShipId);
+        console.log("control second point")
+        await this.userService.deleteShip(req.user._id, ShipId, bookings);
         return;
 
     }

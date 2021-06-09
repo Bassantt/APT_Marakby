@@ -60,7 +60,7 @@ export class UserService {
 
     async checkOwner(userID, shipID) {
         const user = await this.getUserByID(userID);
-        if (!user || user.type != 2)
+        if (!user || user.type < 2)
             throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
         if (!user.ownShips || !user.ownShips.find(ship => String(ship) == String(shipID)))
             throw new HttpException('you dont have this ship', HttpStatus.UNAUTHORIZED);
@@ -90,10 +90,16 @@ export class UserService {
         return await this.userRepository.update(user._id, { ownShips: user.ownShips });
     }
 
-    async deleteShip(userID, shipID) {
+    async deleteShip(userID, shipID, bookings) {
         const user = await this.checkOwner(userID, shipID);
         var shipIndex = user.ownShips.findIndex(ship => String(ship) == String(shipID));
-        user.ownShips.splice(shipIndex, 1)
+        user.ownShips.splice(shipIndex, 1);
+        await this.userRepository.deleteValueFrommAllShips({ 'interstedShips': shipID });
+        if (bookings || bookings != [])
+            for (let i = 0; i < bookings.length; i++) {
+                await this.userRepository.deleteValueFrommAllShips({ 'bookings': bookings[i] });
+                await this.bookingsRepository.deleteBookings(bookings[i]);
+            }
         return await this.userRepository.update(userID, { ownShips: user.ownShips });
     }
 
@@ -134,7 +140,7 @@ export class UserService {
                 ship.blockDates[bookingData.bookDate].push({ from: Number(bookingData.endHour), to: currentRang.to });
         }
         else
-            ship.blockDates[bookingData.bookDate] = [{ from: 0, to: Number(bookingData.fromHour) - 1 }, { from: Number(bookingData.endHour) + 1, to: 24 }];
+            ship.blockDates[bookingData.bookDate] = [{ from: 0, to: Number(bookingData.fromHour) }, { from: Number(bookingData.endHour), to: 24 }];
         await this.shipRepository.updateShipData(shipId, { blockDates: ship.blockDates });
         console.log(ship.blockDates[bookingData.bookDate]);
 
@@ -143,57 +149,37 @@ export class UserService {
 
     async getMyBooking(userId) {
         const user = await this.getUserByID(userId);
-        var bookings = [];
-        const bookings_ids = user.bookings;
-
         return await this.getBookingsData(user.interstedShips, user.bookings);
     }
     async getBookingsData(ships, bookings) {
         var bookings_data = [];
         if (!ships || !bookings || bookings == [] || ships == [])
             return [];
-        for (let i = 0; i < bookings.length; i++)
+        for (let i = 0; i < bookings.length; i++) {
+            console.log(bookings[i], ships[i])
             bookings_data.push({
                 "bookingDetails": await this.bookingsRepository.findByID(bookings[i]),
-                "shipId": await this.shipRepository.findByID(ships[i])
+                "ship": await this.shipRepository.findByID(ships[i])
             });
+        }
+        return bookings_data;
     }
-    /*
-        async deleteBookShip(userId, bookingId) {
-            const ship = await this.shipRepository.findByID(shipId);
-            if (!ship)
-                throw new HttpException('this ship is not found', HttpStatus.BAD_REQUEST);
-            var index = -2;
-            if (!ship.blockDates || ship.blockDates == []) ship.blockDates = {};
-            if (ship.blockDates[bookingData.bookDate]) {
-                index = ship.blockDates[bookingData.bookDate].findIndex(range => Number(range.from) >= Number(bookingData.fromHour) && Number(range.to) <= Number(bookingData.endHour))
-                if (!(index >= 0))
-                    throw new HttpException('this time ship is not available', HttpStatus.BAD_REQUEST);
-            }
-            const booking = await this.bookingsRepository.createBookings(bookingData);
-            // await this.bookingsRepository.updateBookingsData(booking._id, { user: userId, ship: shipId });
-            await this.userRepository.addBooking(userId, booking._id);
-            await this.userRepository.updateArrayDataInUser(userId, { interstedShips: shipId });
-            await this.shipRepository.addBooking(shipId, booking._id);
-            if (index >= 0) {
-                const currentRang = ship.blockDates[bookingData.bookDate][index];
-                ship.blockDates[bookingData.bookDate].splice(index, 1);
-                if (currentRang.from != bookingData.fromHour && currentRang.to != bookingData.endHour) {
-                    ship.blockDates[bookingData.bookDate].push({ from: currentRang.from, to: Number(bookingData.fromHour) });
-                    ship.blockDates[bookingData.bookDate].push({ from: Number(bookingData.endHour), to: currentRang.to });
-                }
-                else if (currentRang.from == bookingData.fromHour && currentRang.to != bookingData.endHour)
-                    ship.blockDates[bookingData.bookDate].push({ from: Number(bookingData.endHour), to: currentRang.to });
-                else if (currentRang.from != bookingData.fromHour && currentRang.to == bookingData.endHour)
-                    ship.blockDates[bookingData.bookDate].push({ from: Number(bookingData.endHour), to: currentRang.to });
-            }
-            else
-                ship.blockDates[bookingData.bookDate] = [{ from: 0, to: Number(bookingData.fromHour) - 1 }, { from: Number(bookingData.endHour) + 1, to: 24 }];
-            await this.shipRepository.updateShipData(shipId, { blockDates: ship.blockDates });
-            console.log(ship.blockDates[bookingData.bookDate]);
-    
-    
-        }*/
+    async deleteBookShip(userId, bookingId) {
+        const user = await this.getUserByID(userId);
+        const booking = await this.bookingsRepository.findByID(bookingId);
+        var index = -2;
+        if (!user.bookings && user.bookings == [])
+            throw new HttpException('this booking is not belogs to you', HttpStatus.BAD_REQUEST);
+        index = user.bookings.findIndex(booking => String(booking) == String(bookingId));
+        const shipId = user.interstedShips[index];
+        await this.userRepository.deleteValueFrommAllShips({ 'bookings': bookingId });
+        await this.shipRepository.deleteValueFrommAllShips({ 'bookings': bookingId });
+        await this.userRepository.deleteValueFrommAllShips({ 'interstedShips': user.interstedShips[index] });
+        const ship = await this.shipRepository.findByID(String(shipId));
+        ship.blockDates[booking.bookDate].push({ from: booking.fromHour, to: booking.endHour });
+        await this.shipRepository.updateShipData(String(shipId), { blockDates: ship.blockDates });
+        await this.bookingsRepository.deleteBookings(bookingId);
+    }
 
 }
 

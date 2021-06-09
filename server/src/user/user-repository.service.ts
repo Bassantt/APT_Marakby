@@ -36,5 +36,13 @@ export class UserRepository extends BaseRepository<User>  {
         return await this.pushInArray(userId, { $push: Data });
     }
 
+    async updateValueFrommAllUsers(Data) {
+        return await this.updateAllWith({ $push: Data });
+    }
+    async deleteValueFrommAllShips(Data) {
+        return await this.updateAllWith({ $pull: Data });
+    }
+    //const playlists = await playlistDocument.find({ isPublic: true }).sort('-popularity').limit(20);
+
 
 }

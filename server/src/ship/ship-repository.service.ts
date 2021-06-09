@@ -52,5 +52,11 @@ export class ShipRepository extends BaseRepository<Ship>  {
     async updateArrayDataInShip(shipId, Data) {
         return await this.pushInArray(shipId, { $push: Data });
     }
+    async updateValueFrommAllShips(Data) {
+        return await this.updateAllWith({ $push: Data });
+    }
+    async deleteValueFrommAllShips(Data) {
+        return await this.updateAllWith({ $pull: Data });
+    }
 
 }

@@ -45,8 +45,9 @@ export class ShipService {
     async deleteShip(shipID) {
         const ship = await this.getShipByID(shipID);
         if (!ship)
-            throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
+            throw new HttpException('not a ship', HttpStatus.UNAUTHORIZED);
         await this.ShipRepository.delete(shipID);
+        return ship.bookings;
     }
 
     async getShipsByID(ships) {

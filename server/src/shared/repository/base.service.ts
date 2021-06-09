@@ -52,5 +52,9 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T>  {
         return false;
     }
 
+    async updateAllWith(Data) {
+        await this._Model.update({}, Data);
+    }
+
 
 }
