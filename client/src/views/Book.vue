@@ -69,7 +69,7 @@
       submit
     </button>
     <h4 v-if="done==true">Book done</h4>
-    <h4 v-if="done==false">Sory this is already booked try another</h4>
+    <h4 v-if="done==false"></h4>
   </div>
 </template>
 

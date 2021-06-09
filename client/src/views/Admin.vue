@@ -8,6 +8,21 @@
         <h3>Email: {{user.email}}</h3>
         <h3>Country: {{user.country}}</h3>
     </div>
+        <h2 v-if="true">UnbookingUser</h2>
+    <div class="row">
+      <!-- when back intgrate -->
+      <UnbookingUser
+        class="col-lg-10% col-md-60% col-xs-6"
+        v-for="user in users"
+        :key="user.id"
+        :Name="user.Name"
+        :Email="user.Email"
+        :Country="user.Country"
+        :NoUnbookings="user.NoUnbookings"
+      />
+                
+    </div>
+    
 </div>
 
 </template>
@@ -63,7 +78,7 @@ input[type=text], input[type=password]{
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3px;
-max-width: 70%;
+    max-width: 70%;
     border: 2px solid rgb(221, 221, 221);
 }
 </style>
@@ -71,10 +86,40 @@ max-width: 70%;
 <script>
 import { mapGetters } from "vuex";
 import HomeNavigation from "@/components/HomeNavigationBar.vue";
+import UnbookingUser from "@/components/UnbookingUser.vue";
 export default {
   name: "Admin",
   components: {
-    HomeNavigation,
+    HomeNavigation,UnbookingUser
+  },
+   data(){
+    return{
+    users:[
+      {
+        id:"1",
+        Name:"akram",
+        Email:"userEmail@gmail.com",
+        Country:"Egypt",
+        NoUnbookings:"10"
+      },
+      
+ {
+        id:"2",
+        Name:"loo",
+        Email:"loo@gmail.com",
+        Country:"Egypt",
+        NoUnbookings:"20"
+      },
+       {
+        id:"3",
+        Name:"hoda",
+        Email:"hoda@gmail.com",
+        Country:"Egypt",
+        NoUnbookings:"100"
+      },
+      
+          ]
+    }
   },
   computed: {
     ...mapGetters({
