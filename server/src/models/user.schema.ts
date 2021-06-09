@@ -34,7 +34,6 @@ export class User {
   @IsString()
   creditCard?: string;
   @prop({ options: true })
-  @Length(0, 10)
   @IsNumber()
   @prop({ default: 0 })
   rate?: number;

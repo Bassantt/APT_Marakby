@@ -31,6 +31,7 @@ export class UserService {
         const salt = await bcrypt.genSalt(10);
         let hash = await bcrypt.hash(createUserDto.password, salt);
         createUserDto.password = hash;
+        createUserDto.rate = 0;
         return await this.userRepository.createUser(createUserDto);
     }
 
@@ -55,6 +56,16 @@ export class UserService {
         const user = await this.getUserByID(userID);
         if (!user)
             throw new HttpException('Unauthorized access', HttpStatus.UNAUTHORIZED);
+        if (user.ownShips || user.ownShips != [])
+            for (let i = 0; i < user.ownShips.length; i++) {
+                const ship = await this.shipRepository.findByID(String(user.ownShips[i]));
+                await this.deleteShip(userID, String(user.ownShips[i]), ship.bookings);
+                await this.shipRepository.deleteShip(String(user.ownShips[i]));
+            }
+        if (user.bookings || user.bookings != [])
+            for (let i = 0; i < user.bookings.length; i++)
+                await this.deleteBookShip(userID, user.bookings[i]);
+
         await this.userRepository.delete(userID);
     }
 
@@ -103,6 +114,10 @@ export class UserService {
         return await this.userRepository.update(userID, { ownShips: user.ownShips });
     }
 
+    async updateMe(userId, updatedData) {
+        return await this.userRepository.updateUserData(userId, updatedData);
+    }
+
     async createShip(userID, ship: ShipDto) {
         const user = await this.checkUserIsManager(userID);
         const shipCreated = await this.shipRepository.createShip(ship)
@@ -127,6 +142,7 @@ export class UserService {
         await this.userRepository.addBooking(userId, booking._id);
         await this.userRepository.updateArrayDataInUser(userId, { interstedShips: shipId });
         await this.shipRepository.addBooking(shipId, booking._id);
+        await this.userRepository.updateUserData(userId, { $inc: { rate: 1 } });
         if (index >= 0) {
             const currentRang = ship.blockDates[bookingData.bookDate][index];
             ship.blockDates[bookingData.bookDate].splice(index, 1);
@@ -175,6 +191,7 @@ export class UserService {
         await this.userRepository.deleteValueFrommAllShips({ 'bookings': bookingId });
         await this.shipRepository.deleteValueFrommAllShips({ 'bookings': bookingId });
         await this.userRepository.deleteValueFrommAllShips({ 'interstedShips': user.interstedShips[index] });
+        await this.userRepository.updateUserData(userId, { $dec: { rate: 1 } });
         const ship = await this.shipRepository.findByID(String(shipId));
         ship.blockDates[booking.bookDate].push({ from: booking.fromHour, to: booking.endHour });
         await this.shipRepository.updateShipData(String(shipId), { blockDates: ship.blockDates });
