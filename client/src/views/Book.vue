@@ -69,7 +69,7 @@
       submit
     </button>
     <h4 v-if="done==true">Book done</h4>
-    <h4 v-if="done==false"></h4>
+    <h4 v-if="done==false">{{getmsg}}</h4>
   </div>
 </template>
 
@@ -173,7 +173,7 @@ export default {
   methods: {
     submit() {
         console.log(this.totalsalary);
-      const newbook = {
+      let newbook = {
         bookDate: this.date,
         salary: this.totalsalary,
         availableFunctions: ["Party", "food", "light"],
@@ -182,7 +182,8 @@ export default {
       };
 
       console.log(newbook);
-      this.$store.dispatch("Ship/bookShip", this.$route.params.shipID, newbook);
+      this.$store.dispatch("Ship/setShip", this.$route.params.shipID);
+      this.$store.dispatch("Ship/bookShip", newbook);
     },
   },
   computed: {
@@ -190,6 +191,7 @@ export default {
       ShipsData: "Ship/getShipsData",
       getuser_discount: "Authorization/getuser_discount",
       done: "Ship/donebook",
+      getmsg:"Ship/getmsg"
     }),
   },
   created: function () {

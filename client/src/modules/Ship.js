@@ -10,7 +10,9 @@ export default {
     managerShips: [],
     done:false,
     add:false,
-    delete:false
+    delete:false,
+    searchwith:"",
+    mseg:""
   },
   mutations: {
     done(state, done) {
@@ -27,6 +29,8 @@ export default {
     },
     set_Ship(state, id) {
       state.Ship_Id = id;
+    }, setsearchwith(state,value) {
+      state.searchwith = value;
     },
     setShipsData(state, data) {
       state.ShipsData = data;
@@ -55,10 +59,15 @@ export default {
     setShip({ commit }, ShipId) {
       commit("set_Ship", ShipId);
     },
+    ////////////////////////////////////////
+    setsearchwith({ commit }, searchwithhh) {
+      commit("setsearchwith", searchwithhh);
+    },
     //////////////////search for ship with name////////////////////////
-    SearchShip({ commit }, searchvalue,searchwith) {
+    SearchShip({ commit,state }, searchvalue) {
       var searchByCountry=false;
-      if(searchwith=="2")
+      console.log(state.searchwith);
+      if(state.searchwith==="2")
       {
         searchByCountry=true;
       }
@@ -161,13 +170,13 @@ export default {
         });
     },
     //////////////////////////////////////////////
-    bookShip({ commit },shipId,bookinfo) {
+    bookShip({ commit,state },bookinfo) {
       console.log(bookinfo);
       const token = localStorage.getItem("Authorization");
       console.log(token);
       axios.defaults.headers.common["Authorization"] = token;
       axios
-        .post("http://localhost:3000/me/book/"+shipId, {
+        .post("http://localhost:3000/me/book/"+state.Ship_Id, {
             bookDate: bookinfo.bookDate,
             salary:bookinfo.salary,
             availableFunctions:["Party","food","light"] ,
@@ -180,8 +189,9 @@ export default {
           store.dispatch("Ship/showmanagerShips");
         })
         .catch((error) => {
+          state.mseg=error.mseg;
           commit("done",false)
-          console.log(error,"hiii");
+          console.log(error.mseg,"hiii");
         });
     },
   },
@@ -190,6 +200,7 @@ export default {
     getShipsData: (state) => state.ShipsData,
     setShipsOutFromSearch: (state) => state.ShipsOutFromSearch,
     getmanagerShips: (state) => state.managerShips,
-    donebook:(state) => state.done
+    donebook:(state) => state.done,
+    getmsg:(state) => state.mseg,
   },
 };

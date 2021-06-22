@@ -45,9 +45,12 @@ export default {
   },
   created: function () {
     this.$store.dispatch(
-      "Ship/SearchShip",
-      this.$route.params.Searchvalue,
+      "Ship/setsearchwith",
       this.$route.params.searchwith
+    );
+    this.$store.dispatch(
+      "Ship/SearchShip",
+      this.$route.params.Searchvalue
     );
   },
 };
